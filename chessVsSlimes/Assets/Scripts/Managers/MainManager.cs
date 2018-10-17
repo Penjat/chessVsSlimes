@@ -8,6 +8,7 @@ public class MainManager : MonoBehaviour {
 
 	private MenuManager menuManager;
 	private GridManager gridManager;
+	private PieceManager pieceManager;
 
 	void Start () {
 		Debug.Log(TAG + "starting up.");
@@ -18,13 +19,12 @@ public class MainManager : MonoBehaviour {
 		gridManager = GetComponent<GridManager>();
 		gridManager.SetUp();
 
+		pieceManager = GetComponent<PieceManager>();
+		pieceManager.SetUp(this,gridManager);
+
 		ToTitle();
 
-		Debug.Log("5 " + Calc.IsOdd(5));
-		Debug.Log("6 " + Calc.IsOdd(6));
-		Debug.Log("7 " + Calc.IsOdd(7));
-		Debug.Log("12 " + Calc.IsOdd(12));
-		Debug.Log("534 " + Calc.IsOdd(534));
+	
 	}
 
 	public void ToLevelSel(){
@@ -41,6 +41,7 @@ public class MainManager : MonoBehaviour {
 
 		//TODO clear the grid after
 		gridManager.CreateGrid();
+		pieceManager.StartLevel();
 	}
 
 
