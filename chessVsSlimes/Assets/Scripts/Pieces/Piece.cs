@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour {
 
-	private Square square;
+	protected Square square;
 	private Animator animator;
 
-	public void SetUp(Square s){
+	public virtual void SetUp(Square s){
 		animator = GetComponent<Animator>();
 		SetPos(s);
 	}
@@ -30,13 +30,13 @@ public class Piece : MonoBehaviour {
 		animator.Play("pieceNorm");
 
 	}
-	public void MoveTo(Square newSquare){
+	public virtual void MoveTo(Square newSquare){
 		if(square != null){
 			square.SetPiece(null);
 		}
 		SetPos(newSquare);
 	}
-	public void GetPosMoves(GridManager gridManager){
+	public virtual void GetPosMoves(GridManager gridManager){
 		//show all the posible moves for this piece
 
 		GetQueenMoves(gridManager);
@@ -100,6 +100,13 @@ public class Piece : MonoBehaviour {
 			}
 			nextSquare.SetPossible(true);
 
+		}
+	}
+	protected void CheckSquare(int x,int z,GridManager gridManager){
+		//highlights the square if it is posible to move there
+		Square square = gridManager.GetSquare(x,z);
+		if(square != null && !square.HasPiece()){
+			square.SetPossible(true);
 		}
 	}
 }
