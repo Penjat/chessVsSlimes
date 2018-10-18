@@ -10,6 +10,8 @@ public class PieceManager : MonoBehaviour {
 	private MainManager mainManager;
 	private GridManager gridManager;
 
+	private Piece curPiece;
+
 	public GameObject piecePrefab;//TODO only have prfabs for the normal chess pieces, make piece abstract
 
 	public void SetUp(MainManager mainM,GridManager gridM){
@@ -22,8 +24,40 @@ public class PieceManager : MonoBehaviour {
 		//TODO pass the level valuse in here
 		Debug.Log(TAG + "starting level.");
 
+		AddPiece(0,0);
+		AddPiece(5,2);
+		AddPiece(3,2);
+
+	}
+
+	public void SelectPiece(Piece piece){
+		//set the current piece as selected and deselect the old piece if their is one
+		if(curPiece != null){
+			curPiece.SetSelected(false);
+		}
+		curPiece = piece;
+		curPiece.SetSelected(true);
+	}
+	public void AddPiece(int x,int z){
 		GameObject g = Instantiate(piecePrefab);
 		Piece piece = g.GetComponent<Piece>();
-		piece.SetPos(gridManager.GetSquare(0,4));
+		piece.SetUp(gridManager.GetSquare(x,z));
+		//TODO add to piece list
+	}
+	public void SquarePressed(Square square){
+
+		//if clicking on square with a piece
+		if(square.HasPiece()){
+			SelectPiece(square.GetPiece());
+			return;
+		}
+
+		//if clicking on empty square
+		//and there is a piece selected
+		if(curPiece != null){
+			curPiece.MoveTo(square);
+			curPiece.SetSelected(false);
+			curPiece = null;
+		}
 	}
 }

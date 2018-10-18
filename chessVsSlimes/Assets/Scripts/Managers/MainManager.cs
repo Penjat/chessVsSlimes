@@ -9,6 +9,7 @@ public class MainManager : MonoBehaviour {
 	private MenuManager menuManager;
 	private GridManager gridManager;
 	private PieceManager pieceManager;
+	private InputManager inputManager;
 
 	void Start () {
 		Debug.Log(TAG + "starting up.");
@@ -22,9 +23,12 @@ public class MainManager : MonoBehaviour {
 		pieceManager = GetComponent<PieceManager>();
 		pieceManager.SetUp(this,gridManager);
 
+		inputManager = GetComponent<InputManager>();
+		inputManager.SetUp(this,pieceManager);
+
 		ToTitle();
 
-	
+
 	}
 
 	public void ToLevelSel(){

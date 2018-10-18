@@ -24,6 +24,9 @@ public class Square : MonoBehaviour {
 	public void SetPiece(Piece p){
 		piece = p;
 	}
+	public bool HasPiece(){
+		return (piece != null);
+	}
 	public int GetX(){
 		return x;
 	}
