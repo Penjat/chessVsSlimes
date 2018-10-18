@@ -36,7 +36,8 @@ public class PieceManager : MonoBehaviour {
 			curPiece.SetSelected(false);
 		}
 		curPiece = piece;
-		curPiece.SetSelected(true);
+		gridManager.ClearPosibleMoves();
+		curPiece.SetSelected(gridManager);
 	}
 	public void AddPiece(int x,int z){
 		GameObject g = Instantiate(piecePrefab);
@@ -54,10 +55,11 @@ public class PieceManager : MonoBehaviour {
 
 		//if clicking on empty square
 		//and there is a piece selected
-		if(curPiece != null){
+		if(curPiece != null && square.GetIsPossible()){
 			curPiece.MoveTo(square);
 			curPiece.SetSelected(false);
 			curPiece = null;
+			gridManager.ClearPosibleMoves();
 		}
 	}
 }

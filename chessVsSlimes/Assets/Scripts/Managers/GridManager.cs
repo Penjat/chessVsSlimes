@@ -44,6 +44,16 @@ public class GridManager : MonoBehaviour {
 
 	}
 	public Square GetSquare(int x, int z){
+		//check if goes out of bounds of the grid
+		if(x >= grid.GetLength(0) || z >= grid.GetLength(1) || x <0 || z < 0){
+			return null;
+		}
 		return grid[x,z];
+	}
+	public void ClearPosibleMoves(){
+		//clears any square marked as posible
+		foreach(Square square in grid){
+			square.SetPossible(false);
+		}
 	}
 }

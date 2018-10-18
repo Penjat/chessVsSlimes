@@ -7,6 +7,7 @@ public class Square : MonoBehaviour {
 	private Piece piece;
 	private int x,z;
 	private Animator animator;
+	private bool isPosibleMove;
 
 	public void SetPos(int xPos, int zPos){
 		x = xPos;
@@ -26,6 +27,14 @@ public class Square : MonoBehaviour {
 	}
 	public bool HasPiece(){
 		return (piece != null);
+	}
+	public void SetPossible(bool b){
+		//sets if it is a posible move
+		animator.SetBool("isPos",b);
+		isPosibleMove = b;
+	}
+	public bool GetIsPossible(){
+		return isPosibleMove;
 	}
 	public int GetX(){
 		return x;
