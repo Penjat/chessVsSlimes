@@ -6,10 +6,16 @@ public class Square : MonoBehaviour {
 
 	private Piece piece;
 	private int x,z;
+	private Animator animator;
 
 	public void SetPos(int xPos, int zPos){
 		x = xPos;
 		z = zPos;
+		animator = GetComponent<Animator>();
+	}
+	public void IsLight(bool b){
+		//is the square lit up
+		animator.SetBool("isLight",b);
 	}
 	public Piece GetPiece(){
 		//returns null if no piece
@@ -17,5 +23,11 @@ public class Square : MonoBehaviour {
 	}
 	public void SetPiece(Piece p){
 		piece = p;
+	}
+	public int GetX(){
+		return x;
+	}
+	public int GetZ(){
+		return z;
 	}
 }

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4071089954681554}
   - component: {fileID: 114545110802678014}
+  - component: {fileID: 95044367251007894}
   m_Layer: 0
   m_Name: SquareWhite
   m_TagString: Untagged
@@ -38,7 +39,7 @@ GameObject:
   - component: {fileID: 33384553156653778}
   - component: {fileID: 65351829860762708}
   - component: {fileID: 23997349557118172}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,6 +123,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95044367251007894
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1069164331129632}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 19cab30aeb87741bf85813a9fc1a8ded, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114545110802678014
 MonoBehaviour:
   m_ObjectHideFlags: 1
