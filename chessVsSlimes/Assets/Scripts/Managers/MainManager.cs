@@ -51,14 +51,16 @@ public class MainManager : MonoBehaviour {
 	public void ToGamePlay(){
 		Debug.Log(TAG + "to gameplay.");
 		menuManager.NavigateMenu(MenuManager.GAMEPLAY);
+		//TODO get level from level Manager
+		Level level = new Level();
 
 		//TODO clear the grid after
-		StartLevel();
+		StartLevel(level);
 	}
-	public void StartLevel(){
+	public void StartLevel(Level level){
 		//TODO pass in a level
 
-		gridManager.CreateGrid();
+		gridManager.CreateGrid(level);
 		pieceManager.StartLevel();
 		enemyManager.StartLevel();
 		StartPlayerTurn();

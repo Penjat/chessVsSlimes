@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
 	}
 	public void Move(GridManager gridManager){
 		Square nextSquare = gridManager.GetSquare(square ,1,0);
-		if(nextSquare == null){
+		if(nextSquare == null || !nextSquare.GetAvailable()){
 			return;
 		}
 		//TODO check for other enemies
@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour {
 		MoveTo(nextSquare);
 	}
 	public virtual void MoveTo(Square newSquare){
-		if(square != null){
+		if(square != null ){
 			//clear from the old square
 			square.SetEnemy(null);
 		}

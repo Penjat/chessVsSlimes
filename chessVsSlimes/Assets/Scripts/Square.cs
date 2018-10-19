@@ -9,6 +9,7 @@ public class Square : MonoBehaviour {
 	private int x,z;
 	private Animator animator;
 	private bool isPosibleMove;
+	private bool isAvailable;
 	private bool canTake;//there is an enemy here that can be taken
 
 	public void SetPos(int xPos, int zPos){
@@ -78,7 +79,14 @@ public class Square : MonoBehaviour {
 		return canTake;
 	}
 
-
+	public void SetAvailable(bool b){
+		//sets whether this square is part of the Level
+		gameObject.SetActive(b);
+		isAvailable = b;
+	}
+	public bool GetAvailable(){
+		return isAvailable;
+	}
 	public int GetX(){
 		return x;
 	}

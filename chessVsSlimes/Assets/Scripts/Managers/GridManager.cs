@@ -15,7 +15,7 @@ public class GridManager : MonoBehaviour {
 		Debug.Log("setting up.");
 	}
 
-	public void CreateGrid(){
+	public void CreateGrid(Level level){
 		Debug.Log("creating grid.");
 		int gridWidth = 8;
 		int gridDepth = 8;
@@ -29,7 +29,9 @@ public class GridManager : MonoBehaviour {
 				g.transform.position = new Vector3(x*spacing,0,z*spacing);
 				Square square = g.GetComponent<Square>();
 				square.SetPos(x,z);
+				square.SetAvailable( (level.GetSquare(x,z) == 1) );
 				grid[x,z] = square;
+
 			}
 
 		}
