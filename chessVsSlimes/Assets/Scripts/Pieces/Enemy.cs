@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour {
 	protected float timer;
 	protected Animator animator;
 
+	public GameObject explode;
+
 
 
 	void Update(){
@@ -36,6 +38,11 @@ public class Enemy : MonoBehaviour {
 	public void Take(){
 		square.SetEnemy(null);
 		enemyManager.TakeEnemy(this);
+		//Make explosion
+		explode.transform.SetParent(null);
+		explode.SetActive(true);
+		Destroy(explode, 5.0f);
+
 		Destroy(gameObject);
 	}
 	public void SetTurnTaken(bool b){

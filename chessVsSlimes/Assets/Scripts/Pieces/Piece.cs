@@ -9,6 +9,8 @@ public class Piece : MonoBehaviour {
 	protected Square square;
 	private Animator animator;
 
+	public GameObject explode;
+
 	public virtual void SetUp(PieceManager pieceM, Square s){
 		pieceManager = pieceM;
 		animator = GetComponent<Animator>();
@@ -39,6 +41,10 @@ public class Piece : MonoBehaviour {
 		if(square != null && square.GetPiece() == this){
 			square.SetPiece(null);
 		}
+		explode.transform.SetParent(null);
+		explode.SetActive(true);
+		Destroy(explode, 5.0f);
+		
 		pieceManager.RemovePiece(this);
 		Destroy(gameObject);
 	}
