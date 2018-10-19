@@ -12,6 +12,8 @@ public class MainManager : MonoBehaviour {
 	private InputManager inputManager;
 	private EnemyManager enemyManager;
 
+	private TurnManager turnManager;
+
 	void Start () {
 		Debug.Log(TAG + "starting up.");
 
@@ -29,6 +31,8 @@ public class MainManager : MonoBehaviour {
 
 		inputManager = GetComponent<InputManager>();
 		inputManager.SetUp(this,pieceManager);
+
+		turnManager = new TurnManager();
 
 		ToTitle();
 
@@ -62,6 +66,7 @@ public class MainManager : MonoBehaviour {
 
 	public void StartPlayerTurn(){
 		Debug.Log(TAG + "starting player's turn");
+		turnManager.SetTurn(TurnManager.PLAYER_TURN);
 	}
 
 	public void EndPlayerTurn(){
@@ -70,11 +75,16 @@ public class MainManager : MonoBehaviour {
 	}
 	public void StartEnemyTurn(){
 		Debug.Log(TAG + "starting enemy's turn");
-		EndEnemyTurn();
+		enemyManager.StartTurn();
+		turnManager.SetTurn(TurnManager.ENEMY_TURN);
 	}
 	public void EndEnemyTurn(){
 		Debug.Log(TAG + "ending enemy's turn");
 		StartPlayerTurn();
+	}
+
+	public TurnManager GetTurnManager(){
+		return turnManager;
 	}
 
 

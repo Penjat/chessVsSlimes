@@ -12,10 +12,15 @@ public class PieceManager : MonoBehaviour {
 
 	private Piece curPiece;
 
+	private List<Piece> pieceList;
+
 	public GameObject piecePrefab;//TODO only have prfabs for the normal chess pieces, make piece abstract
 
 	public void SetUp(MainManager mainM,GridManager gridM){
 		Debug.Log(TAG + "setting up.");
+
+		pieceList = new List<Piece>();
+
 		mainManager = mainM;
 		gridManager = gridM;
 	}
@@ -23,6 +28,8 @@ public class PieceManager : MonoBehaviour {
 	public void StartLevel(){
 		//TODO pass the level valuse in here
 		Debug.Log(TAG + "starting level.");
+
+
 
 		AddPiece(0,0);
 		AddPiece(5,2);
@@ -42,8 +49,12 @@ public class PieceManager : MonoBehaviour {
 	public void AddPiece(int x,int z){
 		GameObject g = Instantiate(piecePrefab);
 		Piece piece = g.GetComponent<Piece>();
-		piece.SetUp(gridManager.GetSquare(x,z));
+		piece.SetUp(this,gridManager.GetSquare(x,z));
+		pieceList.Add(piece);
 		//TODO add to piece list
+	}
+	public void RemovePiece(Piece piece){
+		pieceList.Remove(piece);
 	}
 	public void SquarePressed(Square square){
 

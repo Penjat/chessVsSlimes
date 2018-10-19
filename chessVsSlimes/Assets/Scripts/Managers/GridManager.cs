@@ -43,6 +43,12 @@ public class GridManager : MonoBehaviour {
 		return squarePrefabWhite;
 
 	}
+	public Square GetSquare(Square square, int deltaX, int deltaZ){
+		//returns a square based on where it is relitive to another square
+		int x = square.GetX() + deltaX;
+		int z = square.GetZ() + deltaZ;
+		return GetSquare(x, z);
+	}
 	public Square GetSquare(int x, int z){
 		//check if goes out of bounds of the grid
 		if(x >= grid.GetLength(0) || z >= grid.GetLength(1) || x <0 || z < 0){
