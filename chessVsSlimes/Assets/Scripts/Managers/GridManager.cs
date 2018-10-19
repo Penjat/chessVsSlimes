@@ -53,7 +53,7 @@ public class GridManager : MonoBehaviour {
 	public void ClearPosibleMoves(){
 		//clears any square marked as posible
 		foreach(Square square in grid){
-			square.SetPossible(false);
+			square.Clear();
 		}
 	}
 }

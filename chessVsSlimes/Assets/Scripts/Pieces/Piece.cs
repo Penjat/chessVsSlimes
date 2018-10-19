@@ -95,7 +95,13 @@ public class Piece : MonoBehaviour {
 			if(nextSquare == null){
 				return;
 			}
+			if(nextSquare.HasEnemy()){
+				//set the square as takable but stop checking
+				nextSquare.SetCanTake(true);
+				return;
+			}
 			if(nextSquare.HasPiece()){
+				//if the square is blocked by another piece, stop checking
 				return;
 			}
 			nextSquare.SetPossible(true);
@@ -104,9 +110,16 @@ public class Piece : MonoBehaviour {
 	}
 	protected void CheckSquare(int x,int z,GridManager gridManager){
 		//highlights the square if it is posible to move there
-		Square square = gridManager.GetSquare(x,z);
-		if(square != null && !square.HasPiece()){
-			square.SetPossible(true);
+		Square nextSquare = gridManager.GetSquare(x,z);
+		if(nextSquare.HasEnemy()){
+			nextSquare.SetCanTake(true);
+			return;
 		}
+		if(nextSquare != null &&  (!nextSquare.HasPiece() || !nextSquare.HasEnemy()) ){
+			//TODO be able to take enemy
+			//TODO don't need to check if enemy because already checked earlier
+			nextSquare.SetPossible(true);
+		}
+
 	}
 }
