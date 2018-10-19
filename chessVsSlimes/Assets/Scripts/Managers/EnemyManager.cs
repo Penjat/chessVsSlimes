@@ -31,6 +31,7 @@ public class EnemyManager : MonoBehaviour {
 		AddEnemy(0,2);
 		AddEnemy(6,2);
 		AddEnemy(6,6);
+		AddEnemy(1,2);
 	}
 
 	public void AddEnemy(int x, int z){

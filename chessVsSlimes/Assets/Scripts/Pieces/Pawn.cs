@@ -7,8 +7,8 @@ public class Pawn : Piece {
 	//TODO include a direction
 	private bool firstMove;//can move two spaces if is first move
 
-	public override void SetUp(Square s){
-		base.SetUp(s);
+	public override void SetUp(PieceManager pieceM, Square s){
+		base.SetUp(pieceM,s);
 		firstMove = true;
 	}
 	public override void GetPosMoves (GridManager gridManager){

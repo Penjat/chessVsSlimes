@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour {
 
+	protected PieceManager pieceManager;
+
 	protected Square square;
 	private Animator animator;
 
-	public virtual void SetUp(Square s){
+	public virtual void SetUp(PieceManager pieceM, Square s){
+		pieceManager = pieceM;
 		animator = GetComponent<Animator>();
 		SetPos(s);
 	}
@@ -30,6 +33,16 @@ public class Piece : MonoBehaviour {
 		animator.Play("pieceNorm");
 
 	}
+
+	public void Take(){
+		//reset the squares piece if it is the same as this piece
+		if(square != null && square.GetPiece() == this){
+			square.SetPiece(null);
+		}
+		pieceManager.RemovePiece(this);
+		Destroy(gameObject);
+	}
+
 	public virtual void MoveTo(Square newSquare){
 		if(square != null){
 			square.SetPiece(null);

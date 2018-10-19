@@ -57,7 +57,13 @@ public class Enemy : MonoBehaviour {
 		if(nextSquare == null){
 			return;
 		}
-		//TODO check for other enemies and pieces
+		//TODO check for other enemies
+		if(nextSquare.HasPiece()){
+			nextSquare.GetPiece().Take();
+		}
+		if(nextSquare.HasEnemy()){
+			nextSquare.GetEnemy().Take();
+		}
 		MoveTo(nextSquare);
 	}
 	public virtual void MoveTo(Square newSquare){
