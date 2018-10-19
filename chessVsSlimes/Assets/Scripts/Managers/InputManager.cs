@@ -18,8 +18,11 @@ public class InputManager : MonoBehaviour {
 		pieceManager = pieceM;
 	}
 	void Update () {
-		CheckMouseOver();
-		CheckMouseDown();
+		if( mainManager.GetTurnManager().CheckTurn(TurnManager.PLAYER_TURN) ){
+			CheckMouseOver();
+			CheckMouseDown();
+		}
+
 	}
 	private void CheckMouseDown(){
 		if (Input.GetMouseButtonDown(0)){

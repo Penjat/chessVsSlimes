@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Managers\MainManager.cs" />
      <Compile Include="Assets\Scripts\Managers\MenuManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PieceManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\TurnManager.cs" />
      <Compile Include="Assets\Scripts\Pieces\Enemy.cs" />
      <Compile Include="Assets\Scripts\Pieces\Knight.cs" />
      <Compile Include="Assets\Scripts\Pieces\Pawn.cs" />

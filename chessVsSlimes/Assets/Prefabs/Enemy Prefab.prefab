@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4276279732190648}
   - component: {fileID: 114781414387751296}
+  - component: {fileID: 95928019589345698}
   m_Layer: 0
   m_Name: Enemy Prefab
   m_TagString: Untagged
@@ -110,6 +111,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1704731948931670}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &95928019589345698
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092661709214306}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1bca835196cab43ef8ca8774b3371311, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114781414387751296
 MonoBehaviour:
   m_ObjectHideFlags: 1
