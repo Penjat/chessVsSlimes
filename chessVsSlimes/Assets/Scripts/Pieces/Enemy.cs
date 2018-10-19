@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
 	protected bool turnTaken;
 	protected bool takingTurn;
 	protected float timer;
+	protected float rate = 0.7f;
 	protected Animator animator;
 
 	public GameObject explode;
@@ -54,7 +55,7 @@ public class Enemy : MonoBehaviour {
 	public virtual void TakeTurn(GridManager gridManager){
 		//TODO take the enemy turn
 		takingTurn = true;
-		timer = 2.0f;
+		timer = rate;
 		animator.Play("enemySelected");
 		Move(gridManager);
 

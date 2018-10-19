@@ -9,6 +9,10 @@ public class EnemyManager : MonoBehaviour {
 	private MainManager mainManager;
 	private GridManager gridManager;
 
+	//-----------------------------
+	public const int BASIC_SLIME = 0;
+	//-----------------------------
+
 	private List<Enemy> enemyList;
 
 	private bool takingTurn = true;
@@ -23,15 +27,17 @@ public class EnemyManager : MonoBehaviour {
 		gridManager = gridM;
 
 	}
-	public void StartLevel(){
+	public void StartLevel(Level level){
 		Debug.Log(TAG + "starting level.");
 		//TODO clear enemy list on starting level
 		enemyList = new List<Enemy>();
-		AddEnemy(0,3);
-		AddEnemy(0,2);
-		AddEnemy(6,2);
-		AddEnemy(6,6);
-		AddEnemy(1,2);
+		AddEnemies(level.GetEnemies());
+
+	}
+	public void AddEnemies(List<Level.Ob> obList){
+		foreach(Level.Ob ob in obList){
+			AddEnemy(ob.GetX(), ob.GetZ());
+		}
 	}
 
 	public void AddEnemy(int x, int z){

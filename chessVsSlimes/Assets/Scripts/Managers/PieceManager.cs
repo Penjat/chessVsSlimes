@@ -10,6 +10,10 @@ public class PieceManager : MonoBehaviour {
 	private MainManager mainManager;
 	private GridManager gridManager;
 
+	//-----------------------------
+	public const int KNIGHT = 3;
+	//-----------------------------
+
 	private Piece curPiece;
 
 	private List<Piece> pieceList;
@@ -25,16 +29,16 @@ public class PieceManager : MonoBehaviour {
 		gridManager = gridM;
 	}
 
-	public void StartLevel(){
+	public void StartLevel(Level level){
 		//TODO pass the level valuse in here
 		Debug.Log(TAG + "starting level.");
 
-
-
-		AddPiece(0,0);
-		AddPiece(5,2);
-		AddPiece(3,2);
-
+		CreatePieces(level.GetPieces());
+	}
+	public void CreatePieces(List<Level.Ob> obList){
+		foreach(Level.Ob ob in obList){
+			AddPiece(ob.GetX(), ob.GetZ());
+		}
 	}
 
 	public void SelectPiece(Piece piece){

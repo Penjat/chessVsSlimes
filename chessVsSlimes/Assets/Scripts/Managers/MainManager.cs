@@ -61,8 +61,8 @@ public class MainManager : MonoBehaviour {
 		//TODO pass in a level
 
 		gridManager.CreateGrid(level);
-		pieceManager.StartLevel();
-		enemyManager.StartLevel();
+		pieceManager.StartLevel(level);
+		enemyManager.StartLevel(level);
 		StartPlayerTurn();
 	}
 
