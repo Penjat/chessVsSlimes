@@ -12,5 +12,5 @@ Grid:8,8
 
 Enemy:0,3,3
 
-Piece:0,5,2
-Piece:0,2,5
+Piece:3,5,2
+Piece:3,2,5

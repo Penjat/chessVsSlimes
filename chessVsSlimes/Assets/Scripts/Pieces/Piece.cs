@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece : MonoBehaviour {
+public abstract class Piece : MonoBehaviour {
 
 	protected PieceManager pieceManager;
 

@@ -75,6 +75,9 @@ public class Level {
 		public int GetZ(){
 			return zPos;
 		}
+		public int GetType(){
+			return type;
+		}
 
 	}
 }

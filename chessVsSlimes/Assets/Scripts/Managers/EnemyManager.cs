@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour {
 	private List<Enemy> enemyList;
 
 	private bool takingTurn = true;
-	private float timer;
+	
 
 	public GameObject enemyPrefab;
 
@@ -50,7 +50,7 @@ public class EnemyManager : MonoBehaviour {
 
 	public void StartTurn(){
 		takingTurn = true;
-		timer = 3.0f;
+
 		//reset all enemies
 		foreach(Enemy enemy in enemyList){
 			enemy.SetTurnTaken(false);
