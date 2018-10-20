@@ -3,36 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Level {
+	private string name;
+
 	int[,] grid;
+
 
 	private List<Ob> pieceList;
 	private List<Ob> enemyList;
 
 	public Level(){
 
-		grid = new int[8,8];
-		for(int x=0;x <8;x++){
-			for(int z=0;z <8;z++){
-				grid[x,z] = 1;
-			}
-		}
-		grid[3,5] = 0;
-		grid[3,6] = 0;
-		grid[7,7] = 0;
-		grid[2,2] = 0;
+
 
 		pieceList = new List<Ob>();
 		enemyList = new List<Ob>();
 
-		AddEnemy(EnemyManager.BASIC_SLIME,4,6);
-		AddEnemy(EnemyManager.BASIC_SLIME,0,3);
-		AddEnemy(EnemyManager.BASIC_SLIME,5,0);
 
-		AddPiece(PieceManager.KNIGHT,0,0);
-		AddPiece(PieceManager.KNIGHT,3,3);
-		AddPiece(PieceManager.KNIGHT,2,4);
+	}
+	public void SetName(string s){
+		name = s;
+	}
+	public void CreateGrid(int width,int depth,string[] gridData){
+		//TODO pass in the string[] for all the grid data
+		Debug.Log("gridData length is " + gridData.Length);
 
+		grid = new int[width,depth];
+		for(int x=0;x <width;x++){
 
+			string[] gridLine = gridData[x].Split(',');
+			Debug.Log("gridLine = " + gridData[x]);
+			for(int z=0;z <depth;z++){
+				Debug.Log(gridLine[z]);
+				grid[x,z] = int.Parse(gridLine[z]);
+			}
+		}
 	}
 	public int[,] GetGrid(){
 		return grid;
@@ -54,7 +58,7 @@ public class Level {
 	public List<Ob> GetPieces(){
 		return pieceList;
 	}
-
+	//---------------------------OB----------------------------------------
 	public class Ob{
 		//a generic object, could be an enemy or a piece or whatever
 		//added to lists in level to be converted into Game Pieces on level load

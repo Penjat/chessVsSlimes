@@ -17,8 +17,8 @@ public class GridManager : MonoBehaviour {
 
 	public void CreateGrid(Level level){
 		Debug.Log("creating grid.");
-		int gridWidth = 8;
-		int gridDepth = 8;
+		int gridWidth = level.GetGrid().GetLength(0);
+		int gridDepth = level.GetGrid().GetLength(1);
 		float spacing = 1.1f;
 		grid = new Square[gridWidth,gridDepth];
 

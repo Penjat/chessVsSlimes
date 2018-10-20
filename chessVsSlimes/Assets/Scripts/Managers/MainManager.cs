@@ -11,6 +11,7 @@ public class MainManager : MonoBehaviour {
 	private PieceManager pieceManager;
 	private InputManager inputManager;
 	private EnemyManager enemyManager;
+	private LevelLoader levelLoader;
 
 	private TurnManager turnManager;
 
@@ -19,6 +20,9 @@ public class MainManager : MonoBehaviour {
 
 		menuManager = GetComponent<MenuManager>();
 		menuManager.SetUp(this);
+
+		levelLoader = GetComponent<LevelLoader>();
+		levelLoader.SetUp();
 
 		gridManager = GetComponent<GridManager>();
 		gridManager.SetUp();
@@ -52,8 +56,8 @@ public class MainManager : MonoBehaviour {
 		Debug.Log(TAG + "to gameplay.");
 		menuManager.NavigateMenu(MenuManager.GAMEPLAY);
 		//TODO get level from level Manager
-		Level level = new Level();
 
+		Level level = levelLoader.GetLevel();
 		//TODO clear the grid after
 		StartLevel(level);
 	}

@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GridManager.cs" />
      <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\LevelLoader.cs" />
      <Compile Include="Assets\Scripts\Managers\MainManager.cs" />
      <Compile Include="Assets\Scripts\Managers\MenuManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PieceManager.cs" />
@@ -60,6 +61,7 @@
      <Compile Include="Assets\Scripts\Pieces\Pawn.cs" />
      <Compile Include="Assets\Scripts\Pieces\Piece.cs" />
      <Compile Include="Assets\Scripts\Square.cs" />
+     <None Include="Assets\Resources\Levels\level1.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
