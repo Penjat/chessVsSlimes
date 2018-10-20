@@ -35,6 +35,10 @@ public class LevelLoader : MonoBehaviour {
 			string dataTag = line[0];//dataTag informs what king of data is in the line
 			lineNum++;
 
+			int type;
+			int x;
+			int z;
+
 			switch(dataTag){
 
 				case "Name":
@@ -54,7 +58,23 @@ public class LevelLoader : MonoBehaviour {
 					lineNum += width;
 					break;
 
+				case "Enemy":
+					Debug.Log(TAG + "creating an enemy.");
+					string[] enemyData = line[1].Split(',');
+					type = int.Parse(enemyData[0]);
+					x = int.Parse(enemyData[1]);
+					z = int.Parse(enemyData[2]);
+					level.AddEnemy(type,x, z);
+					break;
 
+				case "Piece":
+					Debug.Log(TAG + "creating a piece.");
+					string[] pieceData = line[1].Split(',');
+					type = int.Parse(pieceData[0]);
+					x = int.Parse(pieceData[1]);
+					z = int.Parse(pieceData[2]);
+					level.AddPiece(type,x, z);
+					break;
 
 				default:
 					Debug.Log(TAG + "ignoring line.");
