@@ -10,11 +10,20 @@ public class PieceManager : MonoBehaviour {
 	private MainManager mainManager;
 	private GridManager gridManager;
 
+	//-----------------------------
+	public const int PAWN = 0;
+	public const int BISHOP = 1;
+	public const int KNIGHT = 2;
+	public const int ROOK = 3;
+	public const int QUEEN = 4;
+	public const int KING = 5;
+	//-----------------------------
+
 	private Piece curPiece;
 
 	private List<Piece> pieceList;
 
-	public GameObject piecePrefab;//TODO only have prfabs for the normal chess pieces, make piece abstract
+	public GameObject[] piecePrefabs;
 
 	public void SetUp(MainManager mainM,GridManager gridM){
 		Debug.Log(TAG + "setting up.");
@@ -25,16 +34,16 @@ public class PieceManager : MonoBehaviour {
 		gridManager = gridM;
 	}
 
-	public void StartLevel(){
+	public void StartLevel(Level level){
 		//TODO pass the level valuse in here
 		Debug.Log(TAG + "starting level.");
 
-
-
-		AddPiece(0,0);
-		AddPiece(5,2);
-		AddPiece(3,2);
-
+		CreatePieces(level.GetPieces());
+	}
+	public void CreatePieces(List<Level.Ob> obList){
+		foreach(Level.Ob ob in obList){
+			AddPiece(ob.GetType(),ob.GetX(), ob.GetZ());
+		}
 	}
 
 	public void SelectPiece(Piece piece){
@@ -46,16 +55,24 @@ public class PieceManager : MonoBehaviour {
 		gridManager.ClearPosibleMoves();
 		curPiece.SetSelected(gridManager);
 	}
-	public void AddPiece(int x,int z){
-		GameObject g = Instantiate(piecePrefab);
+
+	public void AddPiece(int type, int x,int z){
+		GameObject g = Instantiate(GetPrefab(type));
+
 		Piece piece = g.GetComponent<Piece>();
 		piece.SetUp(this,gridManager.GetSquare(x,z));
 		pieceList.Add(piece);
 		//TODO add to piece list
 	}
+
+	public GameObject GetPrefab(int type){
+		return piecePrefabs[type];
+	}
+
 	public void RemovePiece(Piece piece){
 		pieceList.Remove(piece);
 	}
+	
 	public void SquarePressed(Square square){
 
 		//if clicking on square with a piece

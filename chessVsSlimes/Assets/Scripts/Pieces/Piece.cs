@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece : MonoBehaviour {
+public abstract class Piece : MonoBehaviour {
 
 	protected PieceManager pieceManager;
 
@@ -44,7 +44,7 @@ public class Piece : MonoBehaviour {
 		explode.transform.SetParent(null);
 		explode.SetActive(true);
 		Destroy(explode, 5.0f);
-		
+
 		pieceManager.RemovePiece(this);
 		Destroy(gameObject);
 	}
@@ -111,7 +111,7 @@ public class Piece : MonoBehaviour {
 			Square nextSquare = gridManager.GetSquare(x,z);
 
 			//if reaches the end of the board, stop checking
-			if(nextSquare == null){
+			if(nextSquare == null || !nextSquare.GetAvailable()){
 				return;
 			}
 			if(nextSquare.HasEnemy()){
@@ -134,11 +134,13 @@ public class Piece : MonoBehaviour {
 			nextSquare.SetCanTake(true);
 			return;
 		}
-		if(nextSquare != null &&  (!nextSquare.HasPiece() || !nextSquare.HasEnemy()) ){
-			//TODO be able to take enemy
-			//TODO don't need to check if enemy because already checked earlier
-			nextSquare.SetPossible(true);
+		if(nextSquare == null ||  nextSquare.HasPiece() || !nextSquare.GetAvailable()){
+			return;
 		}
+
+			//TODO don't need to check if enemy because already checked earlier
+		nextSquare.SetPossible(true);
+
 
 	}
 }
