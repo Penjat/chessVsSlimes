@@ -72,6 +72,10 @@ public class MainManager : MonoBehaviour {
 		enemyManager.StartLevel(level);
 		StartPlayerTurn();
 	}
+	public void ResetLevel(){
+		//TODO some visual effect
+		StartLevel(levelManager.GetLastLevel());
+	}
 
 	public void StartPlayerTurn(){
 		Debug.Log(TAG + "starting player's turn");
