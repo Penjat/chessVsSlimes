@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4230661412773752}
   - component: {fileID: 95284248289056926}
+  - component: {fileID: 114075086354096046}
   m_Layer: 0
   m_Name: KnightPrefab
   m_TagString: Untagged
@@ -199,6 +200,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114075086354096046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1325698493412526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad426d5156ab4b57acbac68fdb3585c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explode: {fileID: 1437248904175456}
 --- !u!198 &198701758016753756
 ParticleSystem:
   m_ObjectHideFlags: 1

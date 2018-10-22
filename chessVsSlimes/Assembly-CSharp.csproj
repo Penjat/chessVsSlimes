@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Managers\GridManager.cs" />
      <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
      <Compile Include="Assets\Scripts\Managers\LevelLoader.cs" />
+     <Compile Include="Assets\Scripts\Managers\LevelManager.cs" />
      <Compile Include="Assets\Scripts\Managers\MainManager.cs" />
      <Compile Include="Assets\Scripts\Managers\MenuManager.cs" />
      <Compile Include="Assets\Scripts\Managers\PieceManager.cs" />
@@ -65,7 +66,11 @@
      <Compile Include="Assets\Scripts\Pieces\Queen.cs" />
      <Compile Include="Assets\Scripts\Pieces\Rook.cs" />
      <Compile Include="Assets\Scripts\Square.cs" />
+     <Compile Include="Assets\Scripts\UI\LevelButton.cs" />
+     <Compile Include="Assets\Scripts\UI\LevelButtonManager.cs" />
      <None Include="Assets\Resources\Levels\level1.txt" />
+     <None Include="Assets\Resources\Levels\level3.txt" />
+     <None Include="Assets\Resources\Levels\level2.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

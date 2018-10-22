@@ -11,7 +11,8 @@ public class MainManager : MonoBehaviour {
 	private PieceManager pieceManager;
 	private InputManager inputManager;
 	private EnemyManager enemyManager;
-	private LevelLoader levelLoader;
+	private LevelManager levelManager;
+
 
 	private TurnManager turnManager;
 
@@ -21,8 +22,9 @@ public class MainManager : MonoBehaviour {
 		menuManager = GetComponent<MenuManager>();
 		menuManager.SetUp(this);
 
-		levelLoader = GetComponent<LevelLoader>();
-		levelLoader.SetUp();
+		levelManager = GetComponent<LevelManager>();
+		levelManager.SetUp();
+		menuManager.SetUpLevelButtons(levelManager);
 
 		gridManager = GetComponent<GridManager>();
 		gridManager.SetUp();
@@ -36,7 +38,8 @@ public class MainManager : MonoBehaviour {
 		inputManager = GetComponent<InputManager>();
 		inputManager.SetUp(this,pieceManager);
 
-		turnManager = new TurnManager();
+		turnManager = GetComponent<TurnManager>();
+		turnManager.SetUp(this);
 
 		ToTitle();
 
@@ -52,12 +55,12 @@ public class MainManager : MonoBehaviour {
 		menuManager.NavigateMenu(MenuManager.TITLE);
 	}
 
-	public void ToGamePlay(){
+	public void ToGamePlay(int levelNum){
 		Debug.Log(TAG + "to gameplay.");
 		menuManager.NavigateMenu(MenuManager.GAMEPLAY);
-		//TODO get level from level Manager
 
-		Level level = levelLoader.GetLevel();
+
+		Level level = levelManager.GetLevel(levelNum);
 		//TODO clear the grid after
 		StartLevel(level);
 	}
@@ -77,6 +80,7 @@ public class MainManager : MonoBehaviour {
 
 	public void EndPlayerTurn(){
 		Debug.Log(TAG + "ending player's turn");
+
 		StartEnemyTurn();
 	}
 	public void StartEnemyTurn(){
@@ -87,6 +91,15 @@ public class MainManager : MonoBehaviour {
 	public void EndEnemyTurn(){
 		Debug.Log(TAG + "ending enemy's turn");
 		StartPlayerTurn();
+	}
+
+	public void PlayerLose(){
+		Debug.Log(TAG + "Player Lost.");
+		turnManager.SetTurn(TurnManager.PLAYER_LOSE);
+	}
+	public void PlayerWin(){
+		Debug.Log(TAG + "Player Win.");
+		turnManager.SetTurn(TurnManager.PLAYER_WIN);
 	}
 
 	public TurnManager GetTurnManager(){

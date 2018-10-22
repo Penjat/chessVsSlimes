@@ -25,15 +25,13 @@ public class Level {
 	}
 	public void CreateGrid(int width,int depth,string[] gridData){
 		//TODO pass in the string[] for all the grid data
-		Debug.Log("gridData length is " + gridData.Length);
+
 
 		grid = new int[width,depth];
 		for(int x=0;x <width;x++){
 
 			string[] gridLine = gridData[x].Split(',');
-			Debug.Log("gridLine = " + gridData[x]);
 			for(int z=0;z <depth;z++){
-				Debug.Log(gridLine[z]);
 				grid[x,z] = int.Parse(gridLine[z]);
 			}
 		}

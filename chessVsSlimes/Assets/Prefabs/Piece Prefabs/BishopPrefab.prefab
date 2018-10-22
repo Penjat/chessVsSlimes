@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4607419380092602}
   - component: {fileID: 95665959579974560}
+  - component: {fileID: 114842824163011406}
   m_Layer: 0
   m_Name: BishopPrefab
   m_TagString: Untagged
@@ -199,6 +200,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114842824163011406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1901963721282162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1c25ebd802e4a9f82fe38dceb2d7bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explode: {fileID: 1672155492397288}
 --- !u!198 &198783991227703964
 ParticleSystem:
   m_ObjectHideFlags: 1

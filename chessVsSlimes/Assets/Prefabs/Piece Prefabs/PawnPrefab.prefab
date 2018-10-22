@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4048519764582598}
   - component: {fileID: 95148048486190382}
+  - component: {fileID: 114367601662388696}
   m_Layer: 0
   m_Name: PawnPrefab
   m_TagString: Untagged
@@ -199,6 +200,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114367601662388696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1862097055614648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e174ef0fcff4c28ae454dbe18fa4b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explode: {fileID: 1987379286413274}
 --- !u!198 &198350393996001484
 ParticleSystem:
   m_ObjectHideFlags: 1

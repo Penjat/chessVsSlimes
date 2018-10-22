@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour {
 	private List<Enemy> enemyList;
 
 	private bool takingTurn = true;
-	
+
 
 	public GameObject enemyPrefab;
 
@@ -30,14 +30,26 @@ public class EnemyManager : MonoBehaviour {
 	public void StartLevel(Level level){
 		Debug.Log(TAG + "starting level.");
 		//TODO clear enemy list on starting level
+		ClearAllEnemies();
 		enemyList = new List<Enemy>();
 		AddEnemies(level.GetEnemies());
 
 	}
 	public void AddEnemies(List<Level.Ob> obList){
+
 		foreach(Level.Ob ob in obList){
 			AddEnemy(ob.GetX(), ob.GetZ());
 		}
+	}
+	public void ClearAllEnemies(){
+		//clear the grid and all gameobjects
+		if(enemyList == null){
+			return;
+		}
+		foreach(Enemy enemy in enemyList){
+			Destroy(enemy.gameObject);
+		}
+		enemyList.Clear();
 	}
 
 	public void AddEnemy(int x, int z){
@@ -63,6 +75,7 @@ public class EnemyManager : MonoBehaviour {
 	}
 	public void TakeEnemy(Enemy enemy){
 		enemyList.Remove(enemy);
+		CheckPlayerWin();
 	}
 	public void FindNextEnemy(){
 		//cycle through the enemies to see if any need to take their turn
@@ -78,6 +91,12 @@ public class EnemyManager : MonoBehaviour {
 		}
 		//if no enemies left to take their turns, end enemy turn
 		EndTurn();
+	}
+	public void CheckPlayerWin(){
+		if(enemyList.Count == 0){
+
+			mainManager.PlayerWin();
+		}
 	}
 
 

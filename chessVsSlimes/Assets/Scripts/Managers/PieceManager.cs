@@ -37,13 +37,24 @@ public class PieceManager : MonoBehaviour {
 	public void StartLevel(Level level){
 		//TODO pass the level valuse in here
 		Debug.Log(TAG + "starting level.");
-
+		ClearAllPieces();
 		CreatePieces(level.GetPieces());
 	}
 	public void CreatePieces(List<Level.Ob> obList){
+
 		foreach(Level.Ob ob in obList){
 			AddPiece(ob.GetType(),ob.GetX(), ob.GetZ());
 		}
+	}
+	public void ClearAllPieces(){
+		//clear the grid and all gameobjects
+		if(pieceList == null){
+			return;
+		}
+		foreach(Piece piece in pieceList){
+			Destroy(piece.gameObject);
+		}
+		pieceList.Clear();
 	}
 
 	public void SelectPiece(Piece piece){
@@ -71,8 +82,9 @@ public class PieceManager : MonoBehaviour {
 
 	public void RemovePiece(Piece piece){
 		pieceList.Remove(piece);
+		CheckLose();
 	}
-	
+
 	public void SquarePressed(Square square){
 
 		//if clicking on square with a piece
@@ -100,5 +112,13 @@ public class PieceManager : MonoBehaviour {
 			mainManager.EndPlayerTurn();
 		}
 
+	}
+	public List<Piece> GetPieceList(){
+		return pieceList;
+	}
+	public void CheckLose(){
+		if(GetPieceList().Count == 0){
+			mainManager.PlayerLose();
+		}
 	}
 }

@@ -3,21 +3,36 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelLoader : MonoBehaviour {
+public class LevelLoader {
+
 
 	private const string TAG = "LEVEL LOADER: ";
 
-	private Level curLevel;
 
-	public void SetUp(){
-		Debug.Log(TAG + "setting up.");
 
+
+	public Level[] LoadLevels(){
+		TextAsset[] textAssets = Resources.LoadAll<TextAsset>("Levels/");
+
+		Level[] levels = new Level[textAssets.Length];
+
+		int i = 0;
+		foreach(TextAsset textAsset in textAssets){
+			string[] levelData = textAsset.ToString().Split('\n');
+			Level level = ReadLevelData(levelData);
+			levels[i] = level;
+			i++;
+		}
+		return levels;
+	}
+
+	public Level LoadLevel(){
+		//TODO pass a string inside
+		string levelRef = "level1";
 		TextAsset textAsset = Resources.Load<TextAsset>("Levels/level1");
 		string[] levelData = textAsset.ToString().Split('\n');
-
-
-		curLevel = ReadLevelData(levelData);
-
+		Level level = ReadLevelData(levelData);
+		return level;
 	}
 	public Level ReadLevelData(string[] levelData){
 		//loads the data from the string[] and puts it inside the level
@@ -84,11 +99,5 @@ public class LevelLoader : MonoBehaviour {
 		}
 		Debug.Log(TAG + "levelData loaded. " + linesIgnored + "of " + levelData.Length + " lines ignored.");
 		return level;
-	}
-
-	public Level GetLevel(){
-
-
-		return curLevel;
 	}
 }

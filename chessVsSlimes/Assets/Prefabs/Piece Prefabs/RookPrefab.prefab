@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4133417268419604}
   - component: {fileID: 95986511296704568}
+  - component: {fileID: 114228926267566364}
   m_Layer: 0
   m_Name: RookPrefab
   m_TagString: Untagged
@@ -199,6 +200,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114228926267566364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102921465069666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23031a68c2374bf7bca94b6332ef3fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explode: {fileID: 1190471874940564}
 --- !u!198 &198089957257308104
 ParticleSystem:
   m_ObjectHideFlags: 1

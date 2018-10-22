@@ -16,6 +16,7 @@ public class GridManager : MonoBehaviour {
 	}
 
 	public void CreateGrid(Level level){
+		ClearGrid();
 		Debug.Log("creating grid.");
 		int gridWidth = level.GetGrid().GetLength(0);
 		int gridDepth = level.GetGrid().GetLength(1);
@@ -63,5 +64,15 @@ public class GridManager : MonoBehaviour {
 		foreach(Square square in grid){
 			square.Clear();
 		}
+	}
+	public void ClearGrid(){
+		//clear the grid and all gameobjects
+		if(grid == null){
+			return;
+		}
+		foreach(Square square in grid){
+			Destroy(square.gameObject);
+		}
+
 	}
 }
