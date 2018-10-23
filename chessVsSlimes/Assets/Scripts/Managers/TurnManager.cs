@@ -13,18 +13,17 @@ public class TurnManager : MonoBehaviour{
 	public const int PLAYER_LOSE = 3;
 
 	public Text turnText;
+	private string[] turnTextOptions = {"PLayer's Turn","Slime Turn","You Win","You Lost"};
 
 	public void SetUp(MainManager mainM){
 
 	}
 	public void SetTurn(int i){
 		whosTurn = i;
-		if(i == PLAYER_TURN){
-			turnText.text = "Player's Turn";
-		}
-		if(i == ENEMY_TURN){
-			turnText.text = "Slime Turn";
-		}
+
+		turnText.text = turnTextOptions[whosTurn];
+
+
 	}
 	public bool CheckTurn(int i){
 		return (i == whosTurn);

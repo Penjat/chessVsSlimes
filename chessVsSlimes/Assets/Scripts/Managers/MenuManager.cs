@@ -16,6 +16,9 @@ public class MenuManager : MonoBehaviour {
 	public static int LV_SEL = 2;
 	public static int GAMEPLAY = 4;
 	public static int IN_GAME = 8;
+	public static int PLAYER_WIN = 16;
+	public static int ALL_BEATEN = 32;
+	public static int LOSE = 64;
 
 
 

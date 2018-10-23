@@ -24,4 +24,11 @@ public class LevelManager : MonoBehaviour {
 		//returns the last level that was requested, used for resetLevel
 		return levels[curLevelNum];
 	}
+	public bool CheckMoreLevels(){
+		//checks if there are more levels left to play
+		return (curLevelNum+1 < levels.Length);
+	}
+	public Level NextLevel(){
+		return GetLevel(curLevelNum+1);
+	}
 }
