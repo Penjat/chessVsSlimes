@@ -130,7 +130,7 @@ public abstract class Piece : MonoBehaviour {
 	protected void CheckSquare(int x,int z,GridManager gridManager){
 		//highlights the square if it is posible to move there
 		Square nextSquare = gridManager.GetSquare(x,z);
-		if(nextSquare.HasEnemy()){
+		if(nextSquare != null && nextSquare.HasEnemy()){
 			nextSquare.SetCanTake(true);
 			return;
 		}
