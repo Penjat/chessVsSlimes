@@ -100,8 +100,9 @@ public class PieceManager : MonoBehaviour {
 			curPiece.SetSelected(false);
 			curPiece = null;
 			gridManager.ClearPosibleMoves();
-			EndTurn();
+			//EndTurn();
 		}
+		//if clicking on square with an enemy
 		if(curPiece != null && square.GetCanTake()){
 			//TODO clear enemy,separet function for taking enemy
 			square.GetEnemy().Take();
@@ -109,7 +110,7 @@ public class PieceManager : MonoBehaviour {
 			curPiece.SetSelected(false);
 			curPiece = null;
 			gridManager.ClearPosibleMoves();
-			EndTurn();
+			//EndTurn();
 		}
 
 	}

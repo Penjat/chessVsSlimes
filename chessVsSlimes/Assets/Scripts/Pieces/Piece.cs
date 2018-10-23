@@ -11,10 +11,36 @@ public abstract class Piece : MonoBehaviour {
 
 	public GameObject explode;
 
+	protected bool isMoving;
+	protected Vector3 startMarker;//starting position of the move
+	protected float startTime;
+	protected float journeyLength;
+	protected float speed = 10.0f;
+
 	public virtual void SetUp(PieceManager pieceM, Square s){
 		pieceManager = pieceM;
 		animator = GetComponent<Animator>();
 		SetPos(s);
+	}
+	public void Update(){
+		if(isMoving){
+			if(!Moving()){
+				isMoving = false;
+				EndTurn();
+			}
+		}
+	}
+
+	public virtual bool Moving(){
+		float distCovered = (Time.time - startTime) * speed;
+		float fracJourney = distCovered / journeyLength;
+		transform.position = Vector3.Lerp(startMarker, square.transform.position, fracJourney);
+		if(journeyLength-distCovered < .1f){
+
+			transform.position = square.transform.position;
+			return false;
+		}
+		return true;
 	}
 
 	public void SetPos(Square s){
@@ -53,7 +79,14 @@ public abstract class Piece : MonoBehaviour {
 		if(square != null){
 			square.SetPiece(null);
 		}
-		SetPos(newSquare);
+		square = newSquare;
+		//transform.position = square.transform.position;
+		startMarker = transform.position;
+		startTime = Time.time;
+		journeyLength = Vector3.Distance(startMarker, square.transform.position);
+		isMoving = true;
+		square.SetPiece(this);
+		//SetPos(newSquare);
 	}
 	public virtual void GetPosMoves(GridManager gridManager){
 		//show all the posible moves for this piece
@@ -142,5 +175,8 @@ public abstract class Piece : MonoBehaviour {
 		nextSquare.SetPossible(true);
 
 
+	}
+	public void EndTurn(){
+		pieceManager.EndTurn();
 	}
 }
