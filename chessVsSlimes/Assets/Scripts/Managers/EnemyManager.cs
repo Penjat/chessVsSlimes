@@ -98,6 +98,9 @@ public class EnemyManager : MonoBehaviour {
 			mainManager.PlayerWin();
 		}
 	}
+	public GridManager GetGridManager(){
+		return gridManager;
+	}
 
 
 }

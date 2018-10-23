@@ -9,22 +9,53 @@ public class Enemy : MonoBehaviour {
 	protected bool turnTaken;
 	protected bool takingTurn;
 	protected float timer;
-	protected float rate = 0.7f;
+	protected float rate = 0.2f;
 	protected Animator animator;
+
+	protected bool findingMove;//have some time before starting the move
+	protected bool isMoving;
+	protected Vector3 startMarker;//starting position of the move
+	protected float startTime;
+	protected float journeyLength;
+	protected float speed = 2.0f;
 
 	public GameObject explode;
 
 
 
 	void Update(){
-		if(takingTurn){
+
+		if(findingMove){
 			timer-= Time.deltaTime;
 			if(timer <=0 ){
+				findingMove = false;
+				if(!Move(enemyManager.GetGridManager())){
+					//if can't move, end turn
+					EndTurn();
+				}
 
+			}
+		}
+
+		if(isMoving){
+			if(!Moving()){
+				isMoving = false;
 				EndTurn();
 			}
 		}
 	}
+	public virtual bool Moving(){
+		float distCovered = (Time.time - startTime) * speed;
+		float fracJourney = distCovered / journeyLength;
+		transform.position = Vector3.Lerp(startMarker, square.transform.position, fracJourney);
+		if(journeyLength-distCovered < .1f){
+
+			transform.position = square.transform.position;
+			return false;
+		}
+		return true;
+	}
+
 	public void SetUp(EnemyManager enemyM, Square s){
 		enemyManager = enemyM;
 		animator = GetComponent<Animator>();
@@ -33,7 +64,7 @@ public class Enemy : MonoBehaviour {
 	}
 	public void SetPos(Square s){
 		square = s;
-		transform.position = square.transform.position;//TODO position more accuratly
+		transform.position = square.transform.position;
 		square.SetEnemy(this);
 	}
 	public void Take(){
@@ -54,16 +85,18 @@ public class Enemy : MonoBehaviour {
 	}
 	public virtual void TakeTurn(GridManager gridManager){
 		//TODO take the enemy turn
+		findingMove = true;
 		takingTurn = true;
 		timer = rate;
 		animator.Play("enemySelected");
-		Move(gridManager);
+		//Move(gridManager);
 
 	}
-	public void Move(GridManager gridManager){
+	public bool Move(GridManager gridManager){
+		//returns true if can move false if can't
 		Square nextSquare = gridManager.GetSquare(square ,1,0);
 		if(nextSquare == null || !nextSquare.GetAvailable()){
-			return;
+			return false;
 		}
 		//TODO check for other enemies
 		if(nextSquare.HasPiece()){
@@ -73,17 +106,27 @@ public class Enemy : MonoBehaviour {
 			nextSquare.GetEnemy().Take();
 		}
 		MoveTo(nextSquare);
+		return true;
 	}
 	public virtual void MoveTo(Square newSquare){
 		if(square != null ){
 			//clear from the old square
 			square.SetEnemy(null);
 		}
-		SetPos(newSquare);
+		//SetPos(newSquare);
+		square = newSquare;
+		//transform.position = square.transform.position;
+		startMarker = transform.position;
+		startTime = Time.time;
+		journeyLength = Vector3.Distance(startMarker, square.transform.position);
+		isMoving = true;
+		animator.Play("Jump");
+		square.SetEnemy(this);
 	}
 	public void EndTurn(){
 		turnTaken = true;
 		takingTurn = false;
+		transform.position = square.transform.position;//TODO do this better
 		enemyManager.FindNextEnemy();
 		animator.Play("norm");
 	}
