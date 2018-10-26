@@ -9,6 +9,7 @@ public class Pawn : Piece {
 
 	public override void SetUp(PieceManager pieceM, Square s){
 		base.SetUp(pieceM,s);
+		pieceValue = 1;
 		firstMove = true;
 	}
 	public override void GetPosMoves (GridManager gridManager){

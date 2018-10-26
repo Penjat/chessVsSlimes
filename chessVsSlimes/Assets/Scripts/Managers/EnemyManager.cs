@@ -84,7 +84,7 @@ public class EnemyManager : MonoBehaviour {
 			if(!enemy.GetTurnTaken()){
 				//if the enemy hasn't taken its turn, take it
 				Debug.Log(TAG + "enemy taking turn " + enemyNum);
-				enemy.TakeTurn(gridManager);
+				enemy.StartTurn(gridManager);
 				return;
 			}
 			enemyNum++;
@@ -97,6 +97,9 @@ public class EnemyManager : MonoBehaviour {
 
 			mainManager.PlayerWin();
 		}
+	}
+	public GridManager GetGridManager(){
+		return gridManager;
 	}
 
 

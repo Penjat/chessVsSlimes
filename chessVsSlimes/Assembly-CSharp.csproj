@@ -46,7 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Enemies\BasicSlime.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Enemies\HungrySlime.cs" />
      <Compile Include="Assets\Scripts\Level.cs" />
      <Compile Include="Assets\Scripts\Managers\Calc.cs" />
      <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
@@ -69,7 +71,9 @@
      <Compile Include="Assets\Scripts\UI\LevelButton.cs" />
      <Compile Include="Assets\Scripts\UI\LevelButtonManager.cs" />
      <None Include="Assets\Resources\Levels\level1.txt" />
+     <None Include="Assets\Resources\Levels\level5.txt" />
      <None Include="Assets\Resources\Levels\level3.txt" />
+     <None Include="Assets\Resources\Levels\level4.txt" />
      <None Include="Assets\Resources\Levels\level2.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

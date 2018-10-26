@@ -57,7 +57,7 @@ public class MainManager : MonoBehaviour {
 
 	public void ToGamePlay(int levelNum){
 		Debug.Log(TAG + "to gameplay.");
-		menuManager.NavigateMenu(MenuManager.GAMEPLAY);
+
 
 
 		Level level = levelManager.GetLevel(levelNum);
@@ -66,11 +66,18 @@ public class MainManager : MonoBehaviour {
 	}
 	public void StartLevel(Level level){
 		//TODO pass in a level
-
+		menuManager.NavigateMenu(MenuManager.GAMEPLAY);
 		gridManager.CreateGrid(level);
 		pieceManager.StartLevel(level);
 		enemyManager.StartLevel(level);
 		StartPlayerTurn();
+	}
+	public void ResetLevel(){
+		//TODO some visual effect
+		StartLevel(levelManager.GetLastLevel());
+	}
+	public void NextLevel(){
+		StartLevel(levelManager.NextLevel());
 	}
 
 	public void StartPlayerTurn(){
@@ -80,6 +87,10 @@ public class MainManager : MonoBehaviour {
 
 	public void EndPlayerTurn(){
 		Debug.Log(TAG + "ending player's turn");
+		if(turnManager.CheckTurn(TurnManager.PLAYER_WIN) || turnManager.CheckTurn(TurnManager.PLAYER_LOSE)){
+
+			return;
+		}
 
 		StartEnemyTurn();
 	}
@@ -96,10 +107,18 @@ public class MainManager : MonoBehaviour {
 	public void PlayerLose(){
 		Debug.Log(TAG + "Player Lost.");
 		turnManager.SetTurn(TurnManager.PLAYER_LOSE);
+		menuManager.NavigateMenu(MenuManager.GAMEPLAY + MenuManager.LOSE);
 	}
 	public void PlayerWin(){
 		Debug.Log(TAG + "Player Win.");
 		turnManager.SetTurn(TurnManager.PLAYER_WIN);
+
+		if(levelManager.CheckMoreLevels()){
+			menuManager.NavigateMenu(MenuManager.GAMEPLAY + MenuManager.PLAYER_WIN);
+			return;
+		}
+		menuManager.NavigateMenu(MenuManager.GAMEPLAY + MenuManager.ALL_BEATEN);
+
 	}
 
 	public TurnManager GetTurnManager(){
