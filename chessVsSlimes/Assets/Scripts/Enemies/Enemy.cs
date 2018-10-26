@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public abstract class Enemy : MonoBehaviour {
 
 	private EnemyManager enemyManager;
+	protected int numberOfMoves = 3;//default is one
+	protected int movesLeft;
+
 	protected Square square;
 	protected bool turnTaken;
 	protected bool takingTurn;
 	protected float timer;
-	protected float rate = 0.2f;
+	protected float rate = 1.0f;
 	protected Animator animator;
 
 	protected bool findingMove;//have some time before starting the move
@@ -29,9 +32,10 @@ public class Enemy : MonoBehaviour {
 			timer-= Time.deltaTime;
 			if(timer <=0 ){
 				findingMove = false;
-				if(!Move(enemyManager.GetGridManager())){
-					//if can't move, end turn
+				if(!FindMove(enemyManager.GetGridManager())){
+					//if can't find a move, end turn
 					EndTurn();
+
 				}
 
 			}
@@ -40,7 +44,18 @@ public class Enemy : MonoBehaviour {
 		if(isMoving){
 			if(!Moving()){
 				isMoving = false;
+				Debug.Log("Done moving.");
+				movesLeft--;
+				//if has moves left, move again
+				if(movesLeft > 0){
+					TakeTurn(enemyManager.GetGridManager());
+					return;
+				}
+
+				//if no moves left, end turn
 				EndTurn();
+
+
 			}
 		}
 	}
@@ -83,30 +98,24 @@ public class Enemy : MonoBehaviour {
 	public bool GetTurnTaken(){
 		return turnTaken;
 	}
+	public void StartTurn(GridManager gridManager){
+		//is called at the begining of enemies turn
+		movesLeft = numberOfMoves;
+		TakeTurn(gridManager);
+	}
 	public virtual void TakeTurn(GridManager gridManager){
-		//TODO take the enemy turn
+		//is called for every move the enemy takes
+
+		timer = rate;
 		findingMove = true;
 		takingTurn = true;
-		timer = rate;
 		animator.Play("enemySelected");
 		//Move(gridManager);
 
 	}
-	public bool Move(GridManager gridManager){
+	public virtual bool FindMove(GridManager gridManager){
 		//returns true if can move false if can't
-		Square nextSquare = gridManager.GetSquare(square ,1,0);
-		if(nextSquare == null || !nextSquare.GetAvailable()){
-			return false;
-		}
-		//TODO check for other enemies
-		if(nextSquare.HasPiece()){
-			nextSquare.GetPiece().Take();
-		}
-		if(nextSquare.HasEnemy()){
-			nextSquare.GetEnemy().Take();
-		}
-		MoveTo(nextSquare);
-		return true;
+		return false;
 	}
 	public virtual void MoveTo(Square newSquare){
 		if(square != null ){

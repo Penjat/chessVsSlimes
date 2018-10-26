@@ -6,6 +6,8 @@ public abstract class Piece : MonoBehaviour {
 
 	protected PieceManager pieceManager;
 
+	protected int pieceValue;
+
 	protected Square square;
 	private Animator animator;
 
@@ -27,6 +29,7 @@ public abstract class Piece : MonoBehaviour {
 			if(!Moving()){
 				isMoving = false;
 				EndTurn();
+
 			}
 		}
 	}
@@ -178,5 +181,8 @@ public abstract class Piece : MonoBehaviour {
 	}
 	public void EndTurn(){
 		pieceManager.EndTurn();
+	}
+	public int GetPieceValue(){
+		return pieceValue;
 	}
 }

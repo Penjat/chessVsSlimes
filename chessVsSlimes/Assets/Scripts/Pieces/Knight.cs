@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Knight : Piece {
 
+	public override void SetUp(PieceManager pieceM, Square s){
+		base.SetUp(pieceM,s);
+		pieceValue = 2;
+
+	}
 	public override void GetPosMoves (GridManager grid){
 		int x1 = square.GetX();
 		int y1 = square.GetZ();
