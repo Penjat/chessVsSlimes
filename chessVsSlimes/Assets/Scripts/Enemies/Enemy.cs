@@ -32,7 +32,8 @@ public abstract class Enemy : MonoBehaviour {
 			timer-= Time.deltaTime;
 			if(timer <=0 ){
 				findingMove = false;
-				if(!FindMove(enemyManager.GetGridManager())){
+				//TODO get move from list
+				if(!FindMove(enemyManager.GetGridManager(),"hop")){
 					//if can't find a move, end turn
 					EndTurn();
 
@@ -113,7 +114,7 @@ public abstract class Enemy : MonoBehaviour {
 		//Move(gridManager);
 
 	}
-	public virtual bool FindMove(GridManager gridManager){
+	public virtual bool FindMove(GridManager gridManager, string action){
 		//returns true if can move false if can't
 		return false;
 	}

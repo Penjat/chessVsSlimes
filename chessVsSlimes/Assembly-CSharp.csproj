@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Enemies\BasicSlime.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-     <Compile Include="Assets\Scripts\Enemies\HungrySlime.cs" />
      <Compile Include="Assets\Scripts\Level.cs" />
      <Compile Include="Assets\Scripts\Managers\Calc.cs" />
      <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
