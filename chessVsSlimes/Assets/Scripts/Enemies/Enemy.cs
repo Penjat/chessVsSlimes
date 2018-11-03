@@ -8,6 +8,12 @@ public abstract class Enemy : MonoBehaviour {
 	protected int numberOfMoves = 1;//default is one
 	protected int movesLeft;
 
+	protected List<ActionEffect> effectList;
+
+
+	protected List<string> actionList;//the list of all the actions the slime will take
+	protected int actionIndex;//the current action being performed
+
 	protected Square square;
 	protected bool turnTaken;
 	protected bool takingTurn;
@@ -32,12 +38,28 @@ public abstract class Enemy : MonoBehaviour {
 			timer-= Time.deltaTime;
 			if(timer <=0 ){
 				findingMove = false;
-				//TODO get move from list
-				if(!FindMove(enemyManager.GetGridManager(),"hop")){
-					//if can't find a move, end turn
-					EndTurn();
 
+				if(actionIndex >= actionList.Count){
+					EndTurn();
+					return;
 				}
+				if(!FindMove(enemyManager.GetGridManager(),actionList[actionIndex])){
+					//if can't find a move, go to next action
+					/*
+					actionIndex++;
+					if(actionIndex < actionList.Count){
+						TakeTurn(enemyManager.GetGridManager());
+						return;
+					}
+					//if out of actions EndTurn
+					EndTurn();
+					*/
+					TakeTurn(enemyManager.GetGridManager());
+				}
+
+				//If does find a move
+				//TODO perhaps -- movesLeft here
+				actionIndex++;
 
 			}
 		}
@@ -47,13 +69,15 @@ public abstract class Enemy : MonoBehaviour {
 				isMoving = false;
 				Debug.Log("Done moving.");
 				movesLeft--;
+
 				//if has moves left, move again
-				if(movesLeft > 0){
+				//TODO put back in moves left
+				if(actionIndex < actionList.Count){
 					TakeTurn(enemyManager.GetGridManager());
 					return;
 				}
 
-				//if no moves left, end turn
+				//if no actions left, end turn
 				EndTurn();
 
 
@@ -61,6 +85,9 @@ public abstract class Enemy : MonoBehaviour {
 		}
 	}
 	public virtual bool Moving(){
+		//is used when the enemy is moving from square to square
+		//and we want to keep track of when the journey is complete
+
 		float distCovered = (Time.time - startTime) * speed;
 		float fracJourney = distCovered / journeyLength;
 		transform.position = Vector3.Lerp(startMarker, square.transform.position, fracJourney);
@@ -75,6 +102,16 @@ public abstract class Enemy : MonoBehaviour {
 	public void SetUp(EnemyManager enemyM, Square s){
 		enemyManager = enemyM;
 		animator = GetComponent<Animator>();
+
+		effectList = new List<ActionEffect>();
+		actionList = new List<string>();
+
+
+		//TODO add moves from file
+		actionList.Add("shock");
+		actionList.Add("hop");
+		actionList.Add("hop");
+
 		//animator = GetComponent<Animator>();
 		SetPos(s);
 	}
@@ -102,10 +139,12 @@ public abstract class Enemy : MonoBehaviour {
 	public void StartTurn(GridManager gridManager){
 		//is called at the begining of enemies turn
 		movesLeft = numberOfMoves;
+		actionIndex = 0;
 		TakeTurn(gridManager);
 	}
 	public virtual void TakeTurn(GridManager gridManager){
 		//is called for every move the enemy takes
+
 
 		timer = rate;
 		findingMove = true;
@@ -139,5 +178,17 @@ public abstract class Enemy : MonoBehaviour {
 		transform.position = square.transform.position;//TODO do this better
 		enemyManager.FindNextEnemy();
 		animator.Play("norm");
+	}
+	public void CheckEffectsDone(){
+		//checks if there are still actions pending
+		//if none, take turn or end turn
+		if(effectList.Count == 0){
+			TakeTurn(enemyManager.GetGridManager());
+		}
+
+	}
+	public void RemoveEffect(ActionEffect effect){
+		effectList.Remove(effect);
+		CheckEffectsDone();
 	}
 }

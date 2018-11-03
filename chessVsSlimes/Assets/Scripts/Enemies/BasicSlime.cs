@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BasicSlime : Enemy {
 
+	public GameObject shockPrefab;
+
 	public override bool FindMove(GridManager gridManager,string action){
 		//passes in a string for the action to be performed
 		switch(action){
@@ -14,8 +16,16 @@ public class BasicSlime : Enemy {
 			case "hop":
 				return Hop(gridManager);
 
+			case "shock":
+			Debug.Log("shocking");
+				GameObject g = Instantiate(shockPrefab);
+				ShockEffect shock = g.GetComponent<ShockEffect>();
+				effectList.Add(shock);
+				shock.Create(gridManager,square,this);
+				return Shock(gridManager);
+
 			default:
-				Debug.Log("didn't recognise action " + action);
+				Debug.Log("didn't recognise action: " + action);
 				return false;
 		}
 
@@ -35,6 +45,10 @@ public class BasicSlime : Enemy {
 			nextSquare.GetEnemy().Take();
 		}
 		MoveTo(nextSquare);
+		return true;
+	}
+	public bool Shock(GridManager gridManager){
+
 		return true;
 	}
 

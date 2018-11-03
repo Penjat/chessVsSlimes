@@ -171,6 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explode: {fileID: 1929494811674882}
+  shockPrefab: {fileID: 1964581559704424, guid: f05f2b0e86a1740d080c8a45fb709d5d,
+    type: 2}
 --- !u!135 &135386294597670824
 SphereCollider:
   m_ObjectHideFlags: 1
