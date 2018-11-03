@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour {
 
 	private EnemyManager enemyManager;
-	protected int numberOfMoves = 3;//default is one
+	protected int numberOfMoves = 1;//default is one
 	protected int movesLeft;
 
 	protected Square square;

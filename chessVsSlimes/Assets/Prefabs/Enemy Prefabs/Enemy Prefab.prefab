@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4276279732190648}
   - component: {fileID: 95928019589345698}
-  - component: {fileID: 114689050348139366}
+  - component: {fileID: 114556025537883920}
   m_Layer: 0
   m_Name: Enemy Prefab
   m_TagString: Untagged
@@ -159,7 +159,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114689050348139366
+--- !u!114 &114556025537883920
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

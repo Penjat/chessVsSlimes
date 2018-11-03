@@ -5,6 +5,10 @@ using UnityEngine;
 public class BasicSlime : Enemy {
 
 	public override bool FindMove(GridManager gridManager){
+		return Hop(gridManager);
+}
+	public bool Hop(GridManager gridManager){
+		//hops forward in the current direction
 		//returns true if can move false if can't
 		Square nextSquare = gridManager.GetSquare(square ,1,0);
 		if(nextSquare == null || !nextSquare.GetAvailable()){
@@ -20,5 +24,6 @@ public class BasicSlime : Enemy {
 		MoveTo(nextSquare);
 		return true;
 	}
+
 
 }

@@ -15,6 +15,7 @@ public class HungrySlime : Enemy {
 		return false;
 	}
 
+	
 	public Square CheckAround(GridManager gridManager){
 		Vector2[] pointsAround =
 		{new Vector2(1,0),
@@ -34,7 +35,7 @@ public class HungrySlime : Enemy {
 
 					//if the curBestSquare is null or the newSquare has a piece of higher value
 					//set the new square to the current best
-					//greedy algorithm 
+					//greedy algorithm
 					if(curBestSquare == null || curBestSquare.GetPiece().GetPieceValue() < s.GetPiece().GetPieceValue() ){
 						curBestSquare = s;
 					}
