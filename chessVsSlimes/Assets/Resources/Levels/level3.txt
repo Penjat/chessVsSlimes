@@ -10,10 +10,10 @@ Grid:8,8
 1,1,1,1,1,1,1,1
 1,1,1,1,1,1,1,1
 
-Enemy:0,3,3
-Enemy:0,2,2
-Enemy:0,6,5
-Enemy:0,1,1
+Enemy:3,3
+Enemy:2,2
+Enemy:6,5
+Enemy:1,1
 
 Piece:3,5,2
 Piece:3,2,5

@@ -115,15 +115,7 @@ public abstract class Enemy : MonoBehaviour {
 
 		effectList = new List<ActionEffect>();
 		actionList = new List<string>();
-
-
-		//TODO add moves from file
-		actionList.Add("shock");
-		actionList.Add("hop");
-		actionList.Add("hop");
-
-		AddTrait(EXPOLSIVE);
-		//animator = GetComponent<Animator>();
+		
 		SetPos(s);
 	}
 	public void SetPos(Square s){
@@ -233,6 +225,11 @@ public abstract class Enemy : MonoBehaviour {
 	}
 	public void SetTrait(int t){
 		traits = t;
+	}
+	public void AddAction(string action){
+		//adds an action to the enemy
+		//TODO check for conflicting actions, none to worry about yet
+		actionList.Add(action);
 	}
 	public bool AddTrait(int t){
 		//check if already has trait

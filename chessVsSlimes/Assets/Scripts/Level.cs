@@ -13,8 +13,6 @@ public class Level {
 
 	public Level(){
 
-
-
 		pieceList = new List<Ob>();
 		enemyList = new List<Ob>();
 
@@ -46,6 +44,11 @@ public class Level {
 		Ob ob = new Ob(type,x,z);
 		enemyList.Add(ob);
 	}
+	public void AddEnemy(int type,int x, int z,string data){
+		Ob ob = new Ob(type,x,z);
+		ob.SetExtraData(data);
+		enemyList.Add(ob);
+	}
 	public void AddPiece(int type,int x, int z){
 		Ob ob = new Ob(type,x,z);
 		pieceList.Add(ob);
@@ -61,11 +64,15 @@ public class Level {
 		//a generic object, could be an enemy or a piece or whatever
 		//added to lists in level to be converted into Game Pieces on level load
 		private int type,xPos,zPos;
+		private string extraData;//string to be converted into a string array of enemies' traits and actions
 
 		public Ob(int t, int x, int z){
 			type = t;
 			xPos = x;
 			zPos = z;
+		}
+		public void SetExtraData(string s){
+			extraData = s;
 		}
 		public int GetX(){
 			return xPos;
