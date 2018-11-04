@@ -93,6 +93,63 @@ public class Square : MonoBehaviour {
 	public int GetZ(){
 		return z;
 	}
+	public List<Square> CheckAroundSelf(GridManager gridManager){
+		//finds all the pieces surrounding the square
+		Vector2[] pointsAround =
+		{new Vector2(1,0),
+			new Vector2(1,1),
+			new Vector2(0,1),
+			new Vector2(-1,0),
+			new Vector2(-1,1),
+			new Vector2(-1,-1),
+			new Vector2(0,-1),
+			new Vector2(1,-1),};
+
+			List<Square> piecesAround = new List<Square>();
+
+
+			foreach(Vector2 v in pointsAround){
+				Square s = gridManager.GetSquare(this,(int)v.x,(int)v.y);
+				if(s != null && s.HasPiece()){
+					//if it has a piece, add it to the list
+					piecesAround.Add(s);
+				}
+			}
+			return piecesAround;
+	}
+	public Square CheckAroundSelfForBest(GridManager gridManager){
+		//checks around self for the piece with the highest value
+		
+			//finds all the pieces surrounding the square
+			Vector2[] pointsAround =
+			{new Vector2(1,0),
+				new Vector2(1,1),
+				new Vector2(0,1),
+				new Vector2(-1,0),
+				new Vector2(-1,1),
+				new Vector2(-1,-1),
+				new Vector2(0,-1),
+				new Vector2(1,-1),};
+
+
+				Square curBestSquare = null;
+
+				foreach(Vector2 v in pointsAround){
+					Square s = gridManager.GetSquare(this,(int)v.x,(int)v.y);
+					if(s != null && s.HasPiece()){
+						//if the curBestSquare is null or the newSquare has a piece of higher value
+						//set the new square to the current best
+						//greedy algorithm
+						if(curBestSquare == null || curBestSquare.GetPiece().GetPieceValue() < s.GetPiece().GetPieceValue() ){
+							curBestSquare = s;
+						}
+
+
+
+					}
+				}
+				return curBestSquare;
+	}
 
 
 }

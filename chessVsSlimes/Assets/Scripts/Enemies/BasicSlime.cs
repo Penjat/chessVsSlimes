@@ -67,33 +67,21 @@ public class BasicSlime : Enemy {
 	public Square CheckAround(GridManager gridManager){
 		//checks the surounding squares and returns square with the highest piece
 		//returns null if no piece found
+		List<Square> posSquares = square.CheckAroundSelf(gridManager);
 
-		Vector2[] pointsAround =
-		{new Vector2(1,0),
-			new Vector2(1,1),
-			new Vector2(0,1),
-			new Vector2(-1,0),
-			new Vector2(-1,1),
-			new Vector2(-1,-1),
-			new Vector2(0,-1),
-			new Vector2(1,-1),};
+		return FindBest(posSquares);
+	}
+	public Square FindBest(List<Square> posSquares){
+		//cycles through the list and finds the best piece
 
-			Square curBestSquare = null;
+		Square curBestSquare = null;
 
-			foreach(Vector2 v in pointsAround){
-				Square s = gridManager.GetSquare(square,(int)v.x,(int)v.y);
-				if(s != null && s.HasPiece()){
-
-					//if the curBestSquare is null or the newSquare has a piece of higher value
-					//set the new square to the current best
-					//greedy algorithm
-					if(curBestSquare == null || curBestSquare.GetPiece().GetPieceValue() < s.GetPiece().GetPieceValue() ){
-						curBestSquare = s;
-					}
-
-				}
+		foreach(Square s in posSquares){
+			if(curBestSquare == null || curBestSquare.GetPiece().GetPieceValue() < s.GetPiece().GetPieceValue() ){
+				curBestSquare = s;
 			}
-			return curBestSquare;
+		}
+		return curBestSquare;
 	}
 
 

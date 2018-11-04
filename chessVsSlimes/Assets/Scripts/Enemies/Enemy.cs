@@ -108,7 +108,7 @@ public abstract class Enemy : MonoBehaviour {
 
 
 		//TODO add moves from file
-		actionList.Add("shock");
+		actionList.Add("hungry");
 		actionList.Add("hop");
 		actionList.Add("hop");
 
