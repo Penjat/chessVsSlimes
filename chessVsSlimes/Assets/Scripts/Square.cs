@@ -6,6 +6,9 @@ public class Square : MonoBehaviour {
 
 	private Piece piece;
 	private Enemy enemy;
+	private bool hasEffect;
+
+
 	private int x,z;
 	private Animator animator;
 	private bool isPosibleMove;
@@ -22,7 +25,7 @@ public class Square : MonoBehaviour {
 		animator.SetBool("isLight",b);
 	}
 
-
+	//------Piece----------
 	public Piece GetPiece(){
 		//returns null if no piece
 		return piece;
@@ -34,7 +37,15 @@ public class Square : MonoBehaviour {
 		return (piece != null);
 	}
 
+	//------Effect----------
+	public void SetHasEffect(bool b){
+		hasEffect = b;
+	}
+	public bool GetHasEffect(){
+		return hasEffect;
+	}
 
+	//------Enemy----------
 	public Enemy GetEnemy(){
 		//returns null if no piece
 		return enemy;
@@ -45,6 +56,8 @@ public class Square : MonoBehaviour {
 	public bool HasEnemy(){
 		return (enemy != null);
 	}
+
+
 
 	public void Clear(){
 		//clears of is possible and canTake
@@ -119,7 +132,7 @@ public class Square : MonoBehaviour {
 	}
 	public Square CheckAroundSelfForBest(GridManager gridManager){
 		//checks around self for the piece with the highest value
-		
+
 			//finds all the pieces surrounding the square
 			Vector2[] pointsAround =
 			{new Vector2(1,0),

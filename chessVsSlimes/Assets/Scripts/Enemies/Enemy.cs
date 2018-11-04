@@ -8,6 +8,8 @@ public abstract class Enemy : MonoBehaviour {
 	protected int numberOfMoves = 1;//default is one
 	protected int movesLeft;
 
+
+
 	protected List<ActionEffect> effectList;
 
 
@@ -30,6 +32,14 @@ public abstract class Enemy : MonoBehaviour {
 
 	public GameObject explode;
 
+	//--------TRAITS----------
+	protected int traits = 0;
+
+	public static int EXPOLSIVE = 1;
+
+
+
+	//------------------------
 
 
 	void Update(){
@@ -108,10 +118,11 @@ public abstract class Enemy : MonoBehaviour {
 
 
 		//TODO add moves from file
-		actionList.Add("hungry");
+		actionList.Add("shock");
 		actionList.Add("hop");
 		actionList.Add("hop");
 
+		AddTrait(EXPOLSIVE);
 		//animator = GetComponent<Animator>();
 		SetPos(s);
 	}
@@ -127,8 +138,28 @@ public abstract class Enemy : MonoBehaviour {
 		explode.transform.SetParent(null);
 		explode.SetActive(true);
 		Destroy(explode, 5.0f);
+		if(CheckTrait(EXPOLSIVE)){
+			Debug.Log("should explode.");
+			Explode();
+		}
+
 
 		Destroy(gameObject);
+	}
+	public void Explode(){
+		//make the slime explode, destroying surrounding pieces
+		//getSurrounding
+		List<Square> squares =  square.CheckAroundSelf(enemyManager.GetGridManager());
+		//add the piece in the middle
+		squares.Add(square);
+		foreach(Square s in squares){
+			//if they have a piece, destroy that piece
+			if(s.HasPiece()){
+				s.GetPiece().Take();
+			}
+
+
+		}
 	}
 	public void SetTurnTaken(bool b){
 		turnTaken = b;
@@ -173,6 +204,7 @@ public abstract class Enemy : MonoBehaviour {
 		square.SetEnemy(this);
 	}
 	public void EndTurn(){
+
 		turnTaken = true;
 		takingTurn = false;
 		transform.position = square.transform.position;//TODO do this better
@@ -183,6 +215,7 @@ public abstract class Enemy : MonoBehaviour {
 		//checks if there are still actions pending
 		//if none, take turn or end turn
 		if(effectList.Count == 0){
+			enemyManager.GetGridManager().ClearAllEffects();
 			TakeTurn(enemyManager.GetGridManager());
 		}
 
@@ -190,5 +223,25 @@ public abstract class Enemy : MonoBehaviour {
 	public void RemoveEffect(ActionEffect effect){
 		effectList.Remove(effect);
 		CheckEffectsDone();
+	}
+	public bool CheckTrait(int t){
+		if((traits & t)==0){
+			return false;
+		}
+		return true;
+
+	}
+	public void SetTrait(int t){
+		traits = t;
+	}
+	public bool AddTrait(int t){
+		//check if already has trait
+		//return true if set succsessfully, false if already had the trait
+		if((traits & t) != 0){
+			//already had the trait
+			return false;
+		}
+		traits += t;
+		return true;
 	}
 }

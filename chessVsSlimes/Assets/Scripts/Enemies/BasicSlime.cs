@@ -21,7 +21,8 @@ public class BasicSlime : Enemy {
 				GameObject g = Instantiate(shockPrefab);
 				ShockEffect shock = g.GetComponent<ShockEffect>();
 				effectList.Add(shock);
-				shock.Create(gridManager,square,this);
+				shock.Create(gridManager,square,this,shockPrefab);
+				gridManager.UsingEffects();
 				return Shock(gridManager);
 
 			default:

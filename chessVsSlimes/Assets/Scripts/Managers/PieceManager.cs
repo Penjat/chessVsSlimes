@@ -105,8 +105,9 @@ public class PieceManager : MonoBehaviour {
 		//if clicking on square with an enemy
 		if(curPiece != null && square.GetCanTake()){
 			//TODO clear enemy,separet function for taking enemy
-			square.GetEnemy().Take();
 			curPiece.MoveTo(square);
+			square.GetEnemy().Take();
+
 			curPiece.SetSelected(false);
 			curPiece = null;
 			gridManager.ClearPosibleMoves();

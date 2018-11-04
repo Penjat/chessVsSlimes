@@ -11,6 +11,8 @@ public class GridManager : MonoBehaviour {
 	public GameObject squarePrefabBlack;
 	public GameObject squarePrefabWhite;
 
+	private bool shouldClearEffects;
+
 	public void SetUp(){
 		Debug.Log("setting up.");
 	}
@@ -74,5 +76,22 @@ public class GridManager : MonoBehaviour {
 			Destroy(square.gameObject);
 		}
 
+	}
+	public void UsingEffects(){
+		//is called to let gridManager know that effects will need to be cleared
+		shouldClearEffects = true;
+	}
+	public void ClearAllEffects(){
+		//clears all effects to start new enemy action
+		//retunrs if no effects were used
+		if(!shouldClearEffects){
+			return;
+		}
+
+		shouldClearEffects = false;
+		foreach(Square square in grid){
+			square.SetHasEffect(false);
+		}
+		Debug.Log("Effects cleared.");
 	}
 }
