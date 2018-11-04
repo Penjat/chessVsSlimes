@@ -38,8 +38,51 @@ public class EnemyManager : MonoBehaviour {
 	public void AddEnemies(List<Level.Ob> obList){
 
 		foreach(Level.Ob ob in obList){
-			AddEnemy(ob.GetX(), ob.GetZ());
+			AddEnemy(ob.GetX(), ob.GetZ(),ob.GetExtraData());
 		}
+	}
+	public Enemy AddExtraData(Enemy enemy, string data){
+		Debug.Log(TAG + "finding the extra data: " + data);
+		//return if no extraData
+		if(data == ""){
+			return enemy;
+		}
+		string[] extraData = data.Split(',');
+		//cycle through the traits and data and add them to the enemy
+		foreach(string s in extraData){
+				enemy = FindAction(enemy,s);
+		}
+		return enemy;
+	}
+	public Enemy FindAction(Enemy enemy,string action){
+		//finds the action or trait from the string provided
+
+		switch(action){
+
+			//for the actions
+			case "hop":
+				enemy.AddAction(action);
+				break;
+
+			case "shock":
+				enemy.AddAction(action);
+				break;
+
+			case "hungry":
+				enemy.AddAction(action);
+				break;
+
+			//for the Traits
+			case "explosive":
+				enemy.AddTrait(Enemy.EXPLOSIVE);
+				break;
+
+			default:
+				Debug.Log(TAG + "Warning. Did not understand the data");
+				break;
+		}
+		return enemy;
+
 	}
 	public void ClearAllEnemies(){
 		//clear the grid and all gameobjects
@@ -52,13 +95,15 @@ public class EnemyManager : MonoBehaviour {
 		enemyList.Clear();
 	}
 
-	public void AddEnemy(int x, int z){
+	public void AddEnemy(int x, int z,string extra){
 
 		GameObject g = Instantiate(enemyPrefab);
 		Enemy enemy = g.GetComponent<Enemy>();
 		enemy.SetUp(this, gridManager.GetSquare(x,z));
+		enemy = AddExtraData(enemy,extra);
 		enemyList.Add(enemy);
 	}
+
 
 	public void StartTurn(){
 		takingTurn = true;

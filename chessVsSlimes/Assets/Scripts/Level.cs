@@ -64,7 +64,7 @@ public class Level {
 		//a generic object, could be an enemy or a piece or whatever
 		//added to lists in level to be converted into Game Pieces on level load
 		private int type,xPos,zPos;
-		private string extraData;//string to be converted into a string array of enemies' traits and actions
+		private string extraData = "";//string to be converted into a string array of enemies' traits and actions
 
 		public Ob(int t, int x, int z){
 			type = t;
@@ -82,6 +82,9 @@ public class Level {
 		}
 		public int GetType(){
 			return type;
+		}
+		public string GetExtraData(){
+			return extraData;
 		}
 
 	}

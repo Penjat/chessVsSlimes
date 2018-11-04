@@ -82,12 +82,15 @@ public class LevelLoader {
 					z = int.Parse(enemyData[1]);
 
 					//check if has extra data
-					if(enemyData.Length == 3){
+					if(line.Length == 3){
 
-						level.AddEnemy(type,x, z,enemyData[2]);
+						level.AddEnemy(type,x, z,line[2]);
 						break;
 					}
-					level.AddEnemy(type,x, z);
+						level.AddEnemy(type,x, z);
+						
+
+
 					break;
 
 

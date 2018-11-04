@@ -35,7 +35,7 @@ public abstract class Enemy : MonoBehaviour {
 	//--------TRAITS----------
 	protected int traits = 0;
 
-	public static int EXPOLSIVE = 1;
+	public static int EXPLOSIVE = 1;
 
 
 
@@ -115,7 +115,7 @@ public abstract class Enemy : MonoBehaviour {
 
 		effectList = new List<ActionEffect>();
 		actionList = new List<string>();
-		
+
 		SetPos(s);
 	}
 	public void SetPos(Square s){
@@ -130,7 +130,7 @@ public abstract class Enemy : MonoBehaviour {
 		explode.transform.SetParent(null);
 		explode.SetActive(true);
 		Destroy(explode, 5.0f);
-		if(CheckTrait(EXPOLSIVE)){
+		if(CheckTrait(EXPLOSIVE)){
 			Debug.Log("should explode.");
 			Explode();
 		}
