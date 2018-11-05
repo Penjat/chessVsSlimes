@@ -5,8 +5,17 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour {
 
 	private EnemyManager enemyManager;
-	protected int numberOfMoves = 3;//default is one
+	protected int numberOfMoves = 1;//default is one
 	protected int movesLeft;
+
+	//can be 0,1, or -1 but both xDir and yDir can't be 0
+	protected direction dir;
+
+	protected List<ActionEffect> effectList;
+
+
+	protected List<string> actionList;//the list of all the actions the slime will take
+	protected int actionIndex;//the current action being performed
 
 	protected Square square;
 	protected bool turnTaken;
@@ -24,19 +33,69 @@ public abstract class Enemy : MonoBehaviour {
 
 	public GameObject explode;
 
+	//--------TRAITS----------
+	protected int traits = 0;
+
+	public static int EXPLOSIVE = 1;
 
 
+
+	//------------------------
+
+	public enum direction {
+		UP,
+		UP_RIGHT,
+		RIGHT,
+		DOWN_RIGHT,
+		DOWN,
+		DOWN_LEFT,
+		LEFT,
+		UP_LEFT
+
+	};
+
+	public void SetUp(EnemyManager enemyM, Square s,int d){
+		enemyManager = enemyM;
+		animator = GetComponent<Animator>();
+		dir = (direction)d;
+		effectList = new List<ActionEffect>();
+		actionList = new List<string>();
+
+		SetRotation();
+
+		SetPos(s);
+	}
+	public void SetRotation(){
+		transform.rotation = Quaternion.Euler(0,-45*(int)dir,0);
+	}
 	void Update(){
 
 		if(findingMove){
 			timer-= Time.deltaTime;
 			if(timer <=0 ){
 				findingMove = false;
-				if(!FindMove(enemyManager.GetGridManager())){
-					//if can't find a move, end turn
-					EndTurn();
 
+				if(actionIndex >= actionList.Count){
+					EndTurn();
+					return;
 				}
+				if(!FindMove(enemyManager.GetGridManager(),actionList[actionIndex])){
+					//if can't find a move, go to next action
+					/*
+					actionIndex++;
+					if(actionIndex < actionList.Count){
+						TakeTurn(enemyManager.GetGridManager());
+						return;
+					}
+					//if out of actions EndTurn
+					EndTurn();
+					*/
+					TakeTurn(enemyManager.GetGridManager());
+				}
+
+				//If does find a move
+				//TODO perhaps -- movesLeft here
+				actionIndex++;
 
 			}
 		}
@@ -46,13 +105,15 @@ public abstract class Enemy : MonoBehaviour {
 				isMoving = false;
 				Debug.Log("Done moving.");
 				movesLeft--;
+
 				//if has moves left, move again
-				if(movesLeft > 0){
+				//TODO put back in moves left
+				if(actionIndex < actionList.Count){
 					TakeTurn(enemyManager.GetGridManager());
 					return;
 				}
 
-				//if no moves left, end turn
+				//if no actions left, end turn
 				EndTurn();
 
 
@@ -60,6 +121,9 @@ public abstract class Enemy : MonoBehaviour {
 		}
 	}
 	public virtual bool Moving(){
+		//is used when the enemy is moving from square to square
+		//and we want to keep track of when the journey is complete
+
 		float distCovered = (Time.time - startTime) * speed;
 		float fracJourney = distCovered / journeyLength;
 		transform.position = Vector3.Lerp(startMarker, square.transform.position, fracJourney);
@@ -71,12 +135,7 @@ public abstract class Enemy : MonoBehaviour {
 		return true;
 	}
 
-	public void SetUp(EnemyManager enemyM, Square s){
-		enemyManager = enemyM;
-		animator = GetComponent<Animator>();
-		//animator = GetComponent<Animator>();
-		SetPos(s);
-	}
+
 	public void SetPos(Square s){
 		square = s;
 		transform.position = square.transform.position;
@@ -89,8 +148,28 @@ public abstract class Enemy : MonoBehaviour {
 		explode.transform.SetParent(null);
 		explode.SetActive(true);
 		Destroy(explode, 5.0f);
+		if(CheckTrait(EXPLOSIVE)){
+			Debug.Log("should explode.");
+			Explode();
+		}
+
 
 		Destroy(gameObject);
+	}
+	public void Explode(){
+		//make the slime explode, destroying surrounding pieces
+		//getSurrounding
+		List<Square> squares =  square.CheckAroundSelf(enemyManager.GetGridManager());
+		//add the piece in the middle
+		squares.Add(square);
+		foreach(Square s in squares){
+			//if they have a piece, destroy that piece
+			if(s.HasPiece()){
+				s.GetPiece().Take();
+			}
+
+
+		}
 	}
 	public void SetTurnTaken(bool b){
 		turnTaken = b;
@@ -101,10 +180,12 @@ public abstract class Enemy : MonoBehaviour {
 	public void StartTurn(GridManager gridManager){
 		//is called at the begining of enemies turn
 		movesLeft = numberOfMoves;
+		actionIndex = 0;
 		TakeTurn(gridManager);
 	}
 	public virtual void TakeTurn(GridManager gridManager){
 		//is called for every move the enemy takes
+
 
 		timer = rate;
 		findingMove = true;
@@ -113,7 +194,7 @@ public abstract class Enemy : MonoBehaviour {
 		//Move(gridManager);
 
 	}
-	public virtual bool FindMove(GridManager gridManager){
+	public virtual bool FindMove(GridManager gridManager, string action){
 		//returns true if can move false if can't
 		return false;
 	}
@@ -133,10 +214,49 @@ public abstract class Enemy : MonoBehaviour {
 		square.SetEnemy(this);
 	}
 	public void EndTurn(){
+
 		turnTaken = true;
 		takingTurn = false;
 		transform.position = square.transform.position;//TODO do this better
 		enemyManager.FindNextEnemy();
 		animator.Play("norm");
+	}
+	public void CheckEffectsDone(){
+		//checks if there are still actions pending
+		//if none, take turn or end turn
+		if(effectList.Count == 0){
+			enemyManager.GetGridManager().ClearAllEffects();
+			TakeTurn(enemyManager.GetGridManager());
+		}
+
+	}
+	public void RemoveEffect(ActionEffect effect){
+		effectList.Remove(effect);
+		CheckEffectsDone();
+	}
+	public bool CheckTrait(int t){
+		if((traits & t)==0){
+			return false;
+		}
+		return true;
+
+	}
+	public void SetTrait(int t){
+		traits = t;
+	}
+	public void AddAction(string action){
+		//adds an action to the enemy
+		//TODO check for conflicting actions, none to worry about yet
+		actionList.Add(action);
+	}
+	public bool AddTrait(int t){
+		//check if already has trait
+		//return true if set succsessfully, false if already had the trait
+		if((traits & t) != 0){
+			//already had the trait
+			return false;
+		}
+		traits += t;
+		return true;
 	}
 }

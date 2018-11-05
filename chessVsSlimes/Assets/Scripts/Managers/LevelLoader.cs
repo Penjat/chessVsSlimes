@@ -74,13 +74,25 @@ public class LevelLoader {
 					break;
 
 				case "Enemy":
+					//can change to slime if need other enemies
 					Debug.Log(TAG + "creating an enemy.");
 					string[] enemyData = line[1].Split(',');
-					type = int.Parse(enemyData[0]);
-					x = int.Parse(enemyData[1]);
-					z = int.Parse(enemyData[2]);
-					level.AddEnemy(type,x, z);
+					type = 1;
+					x = int.Parse(enemyData[0]);
+					z = int.Parse(enemyData[1]);
+					int dir = int.Parse(enemyData[2]);
+					//check if has extra data
+					if(line.Length == 3){
+
+						level.AddEnemy(type,x, z,dir,line[2]);
+						break;
+					}
+						level.AddEnemy(type,x, z,dir);
+
+
+
 					break;
+
 
 				case "Piece":
 					Debug.Log(TAG + "creating a piece.");
