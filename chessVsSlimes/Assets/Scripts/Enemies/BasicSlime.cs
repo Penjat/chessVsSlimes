@@ -34,7 +34,7 @@ public class BasicSlime : Enemy {
 	public bool Hop(GridManager gridManager){
 		//hops forward in the current direction
 		//returns true if can move false if can't
-		Square nextSquare = gridManager.GetSquare(square ,1,0);
+		Square nextSquare = gridManager.GetSquare(square ,(int)dir);
 		if(nextSquare == null || !nextSquare.GetAvailable()){
 			return false;
 		}

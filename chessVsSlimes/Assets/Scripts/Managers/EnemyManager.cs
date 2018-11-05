@@ -38,7 +38,7 @@ public class EnemyManager : MonoBehaviour {
 	public void AddEnemies(List<Level.Ob> obList){
 
 		foreach(Level.Ob ob in obList){
-			AddEnemy(ob.GetX(), ob.GetZ(),ob.GetExtraData());
+			AddEnemy(ob.GetX(), ob.GetZ(),ob.GetDir(),ob.GetExtraData());
 		}
 	}
 	public Enemy AddExtraData(Enemy enemy, string data){
@@ -95,11 +95,11 @@ public class EnemyManager : MonoBehaviour {
 		enemyList.Clear();
 	}
 
-	public void AddEnemy(int x, int z,string extra){
+	public void AddEnemy(int x, int z,int dir,string extra){
 
 		GameObject g = Instantiate(enemyPrefab);
 		Enemy enemy = g.GetComponent<Enemy>();
-		enemy.SetUp(this, gridManager.GetSquare(x,z));
+		enemy.SetUp(this, gridManager.GetSquare(x,z),dir);
 		enemy = AddExtraData(enemy,extra);
 		enemyList.Add(enemy);
 	}

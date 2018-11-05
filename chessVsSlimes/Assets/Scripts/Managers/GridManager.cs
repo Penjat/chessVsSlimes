@@ -54,6 +54,24 @@ public class GridManager : MonoBehaviour {
 		int z = square.GetZ() + deltaZ;
 		return GetSquare(x, z);
 	}
+	public Square GetSquare(Square square,int direction){
+		//returns a square based on where it is relitive to another square, with direction
+		int x = square.GetX();
+		int z = square.GetZ();
+		switch(direction){
+			case 0: return GetSquare(x+ 1, z+ 0);
+			case 1: return GetSquare(x+ 1, z+ 1);
+			case 2: return GetSquare(x+ 0, z+ 1);
+			case 3: return GetSquare(x- 1, z+ 1);
+			case 4: return GetSquare(x- 1, z+ 0);
+			case 5: return GetSquare(x- 1, z- 1);
+			case 6: return GetSquare(x+ 0, z- 1);
+			case 7: return GetSquare(x+ 1, z- 1);
+			default: return GetSquare(x+ 1, z+ 0);
+		}
+
+
+	}
 	public Square GetSquare(int x, int z){
 		//check if goes out of bounds of the grid
 		if(x >= grid.GetLength(0) || z >= grid.GetLength(1) || x <0 || z < 0){

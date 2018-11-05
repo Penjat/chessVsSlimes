@@ -8,7 +8,8 @@ public abstract class Enemy : MonoBehaviour {
 	protected int numberOfMoves = 1;//default is one
 	protected int movesLeft;
 
-
+	//can be 0,1, or -1 but both xDir and yDir can't be 0
+	protected direction dir;
 
 	protected List<ActionEffect> effectList;
 
@@ -41,7 +42,32 @@ public abstract class Enemy : MonoBehaviour {
 
 	//------------------------
 
+	public enum direction {
+		UP,
+		UP_RIGHT,
+		RIGHT,
+		DOWN_RIGHT,
+		DOWN,
+		DOWN_LEFT,
+		LEFT,
+		UP_LEFT
 
+	};
+
+	public void SetUp(EnemyManager enemyM, Square s,int d){
+		enemyManager = enemyM;
+		animator = GetComponent<Animator>();
+		dir = (direction)d;
+		effectList = new List<ActionEffect>();
+		actionList = new List<string>();
+
+		SetRotation();
+
+		SetPos(s);
+	}
+	public void SetRotation(){
+		transform.rotation = Quaternion.Euler(0,-45*(int)dir,0);
+	}
 	void Update(){
 
 		if(findingMove){
@@ -109,15 +135,7 @@ public abstract class Enemy : MonoBehaviour {
 		return true;
 	}
 
-	public void SetUp(EnemyManager enemyM, Square s){
-		enemyManager = enemyM;
-		animator = GetComponent<Animator>();
 
-		effectList = new List<ActionEffect>();
-		actionList = new List<string>();
-
-		SetPos(s);
-	}
 	public void SetPos(Square s){
 		square = s;
 		transform.position = square.transform.position;
